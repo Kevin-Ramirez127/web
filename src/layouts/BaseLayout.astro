@@ -82,7 +82,7 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
           }
         }
 
-        // Scroll reveals (skip hero — already handled by the timeline).
+        // Scroll reveals (skip hero - already handled by the timeline).
         const revealEls = Array.from(document.querySelectorAll('.reveal')).filter(
           (el) => !el.closest('#top') || !el.hasAttribute('data-hero'),
         );
@@ -90,7 +90,7 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
           const delay = Number(el.getAttribute('data-reveal-delay') ?? 0);
           inView(
             el,
-            // Motion v14 calls onStart(element, entry) — first arg IS the element.
+            // Motion v14 calls onStart(element, entry) - first arg IS the element.
             (element) => {
               try {
                 animate(
