@@ -73,7 +73,7 @@ mid-screen (`right-0 w-1/2`, words from `right-10 lg:right-16`), behind content:
 ```
 
 - `.dot-matrix-lg`: Bitcount Grid Double, solid `#6f6e67` (no texture trick — the face is the matrix). Base `.dot-matrix` (5px 4px-grid clip-text) remains for small text.
-- 3 columns × 5 section cells (`top/about/experience/skills/contact`, `h-[70vh]` slots). Each cell renders a full-height dotted column BEHIND the word; the word carries a solid `bg-ink` backdrop so it covers the dots where they overlap. Words sit at staggered levels (top / middle / bottom). An IntersectionObserver on `main section[id]` (middle viewport band) slides each strip to the active cell with a 0.06s per-column cascade (`src/lib/motion-config.ts` easing). Resize snaps instantly; reduced motion snaps.
+- 3 columns × 5 section cells (`top/about/experience/skills/contact`, `h-[70vh]` slots). Each cell renders a full-height dotted column BEHIND the word; the word carries a solid `bg-ink` backdrop so it covers the dots where they overlap. Words sit at staggered levels (top / middle / bottom). The word MUST stay in-flow (only the dots are absolute) or the columns collapse to zero width and clip everything. An IntersectionObserver on `main section[id]` (middle viewport band) slides each strip to the active cell with a 0.06s per-column cascade (`src/lib/motion-config.ts` easing). Resize snaps instantly; reduced motion snaps.
 - No star/plus backdrops anywhere (`.plus-grid` / `.cross-grid` removed entirely).
 - Rail order must match section order in `src/pages/index.astro`.
 - Former per-section `SideRails.astro` was replaced by this fixed rail; do not reintroduce per-section rails.

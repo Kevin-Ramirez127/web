@@ -30,11 +30,9 @@ const DOTS_CLASS = 'vertical-rl dot-matrix-lg text-[40px] lg:text-[52px] leading
       <div class="h-[70vh] overflow-hidden" data-rail-slot>
         <div class="rail-strip flex flex-col" data-rail-strip={col}>
           {RAILS.map((s) => (
-            <div class="relative h-[70vh] shrink-0">
+            <div class={`relative h-[70vh] shrink-0 flex flex-col items-center py-4 ${LAYOUT[col]}`}>
               <span aria-hidden="true" class={`absolute inset-y-0 left-1/2 -translate-x-1/2 overflow-visible ${DOTS_CLASS}`}>{DOTS}</span>
-              <div class={`absolute inset-0 flex flex-col items-center py-4 ${LAYOUT[col]}`}>
-                <span class={`${WORD_CLASS} bg-ink px-1 py-4`}>{s.words[col]}</span>
-              </div>
+              <span class={`relative ${WORD_CLASS} bg-ink px-1 py-4`}>{s.words[col]}</span>
             </div>
           ))}
         </div>
