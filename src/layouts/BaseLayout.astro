@@ -118,6 +118,8 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
         if (!overlay || !btn) return;
         menuOpen = open;
         btn.setAttribute('aria-expanded', String(open));
+        // Inert when closed: invisible overlay must not be keyboard-focusable.
+        overlay.inert = !open;
         if (open) {
           const links = menuLinks();
           overlay.classList.remove('pointer-events-none');
@@ -165,6 +167,25 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
       overlay?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && menuOpen) setMenu(false);
+      });
+      // Focus trap: Tab cycles inside the open overlay instead of leaking
+      // to the page behind it.
+      overlay?.addEventListener('keydown', (e) => {
+        if (e.key !== 'Tab' || !menuOpen || !overlay) return;
+        const items = Array.from(overlay.querySelectorAll('a[href], button:not([disabled])')).filter(
+          (el) => (el as HTMLElement).offsetParent !== null,
+        ) as HTMLElement[];
+        if (items.length === 0) return;
+        const first = items[0];
+        const last = items[items.length - 1];
+        const active = document.activeElement as HTMLElement | null;
+        if (e.shiftKey && (active === first || !overlay.contains(active))) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && active === last) {
+          e.preventDefault();
+          first.focus();
+        }
       });
     </script>
   </body>
