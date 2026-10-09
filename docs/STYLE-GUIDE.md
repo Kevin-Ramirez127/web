@@ -38,6 +38,7 @@ Defined in `src/styles/global.css` (`@theme`).
 
 - Display: `"Inter Tight"`, weights 200–500. Headings use `font-extralight` + `tracking-tight`.
 - Mono: `"JetBrains Mono"`, weights 200–400. Brackets, labels, tags, stats meta.
+- Pixel: `"Bitcount Grid Double"`, weights 300–500. Rail words only (`.dot-matrix-lg`, solid dim `#6f6e67` — the typeface is the dot matrix, no clip-texture).
 - Scale: hero `text-[13vw] sm:text-6xl md:text-7xl lg:text-8xl`; section titles `text-5xl md:text-6xl font-extralight`; body `17–18px / relaxed / font-light`.
 - Mono kickers look like `...HELLO, I AM...`, `...CAREER...`, `...STACK...`, `...CONTACT...`.
 
@@ -69,7 +70,7 @@ One fixed rail for the whole page (desktop, right edge, behind content) — not 
 <span class="vertical-rl rotate-180 dot-matrix-lg text-[40px] lg:text-[52px]">Golang .</span>
 ```
 
-- `.dot-matrix-lg`: transparent text with larger radial-gradient dot fill (7px grid) for big glyphs. Base `.dot-matrix` (5px) remains for small text.
+- `.dot-matrix-lg`: Bitcount Grid Double, solid `#6f6e67` (no texture trick — the face is the matrix). Base `.dot-matrix` (5px 4px-grid clip-text) remains for small text.
 - 3 columns × 5 section cells (`top/about/experience/skills/contact`, `h-[70vh]` slots). An IntersectionObserver on `main section[id]` (middle viewport band) slides each strip to the active cell with a 0.06s per-column cascade (`src/lib/motion-config.ts` easing). Resize snaps instantly; reduced motion snaps.
 - Rail order must match section order in `src/pages/index.astro`. Backdrop: `.plus-grid` + faint radial dots; mobile gets a fixed faint plus-grid only.
 - Former per-section `SideRails.astro` was replaced by this fixed rail; do not reintroduce per-section rails.
