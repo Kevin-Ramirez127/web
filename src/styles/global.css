@@ -99,6 +99,8 @@ h1, h2, h3 {
 }
 
 .bracket-link {
+  position: relative;
+  isolation: isolate;
   color: var(--color-accent);
   font-weight: 300;
   letter-spacing: 0.01em;
@@ -113,18 +115,11 @@ h1, h2, h3 {
   font-weight: 300;
 }
 
-/* Fill-wipe hover: accent box sweeps left→right behind the label while an
-   ink-colored copy wipes in over it (same duration/easing, edges synced),
-   flipping letters exactly as the fill passes. Brackets stay accent. */
-.fill-label {
-  position: relative;
-  display: inline-block;
-  isolation: isolate;
-  padding: 0 0.3em;
-  color: var(--color-bone);
-  white-space: nowrap;
-}
-.fill-label::before {
+/* Fill-wipe hover: accent box sweeps the whole button left→right (from the
+   "[" onward) while an ink-colored copy of the full content wipes in over it
+   (same duration/easing, edges synced) — brackets included, flipping exactly
+   as the fill passes. */
+.bracket-link::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -137,14 +132,17 @@ h1, h2, h3 {
 .fill-wipe {
   position: absolute;
   inset: 0;
-  padding: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   color: var(--color-ink);
   white-space: nowrap;
+  pointer-events: none;
   clip-path: inset(-20% 100% -20% 0);
   transition: clip-path 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.bracket-link:hover .fill-label::before,
-.bracket-link:focus-visible .fill-label::before {
+.bracket-link:hover::before,
+.bracket-link:focus-visible::before {
   transform: scaleX(1);
 }
 .bracket-link:hover .fill-wipe,
@@ -191,6 +189,6 @@ html [data-hero].is-visible {
   html.js-motion .reveal,
   html.js-motion [data-hero] { opacity: 1; }
   .reveal { transition: none; opacity: 1; translate: none; }
-  .fill-label, .fill-label::before { transition: none; }
+  .bracket-link::before, .fill-wipe { transition: none; }
   html { scroll-behavior: auto; }
 }
