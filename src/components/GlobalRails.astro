@@ -3,12 +3,13 @@
 // Lives on the RIGHT, spanning to mid-screen. Each column holds its word at
 // a different vertical level (top / middle / bottom), words only.
 // Order MUST match the <section> order in src/pages/index.astro:
-// top → about → experience → skills → contact.
+// top → about → experience → projects → skills → contact.
 // As the active section changes, each column slides up to its word.
 const RAILS = [
   { id: 'top', words: ['welcome', 'linux', 'opensource'] },
   { id: 'about', words: ['about me', '$shell', 'oct-1999'] },
   { id: 'experience', words: ['career', 'team collab', 'data'] },
+  { id: 'projects', words: ['projects', 'shipped', 'live'] },
   { id: 'skills', words: ['stack', '{AI}', 'astro'] },
   { id: 'contact', words: ['Keep in touch', '@email', 'linkedin'] },
 ];
