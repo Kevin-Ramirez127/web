@@ -12,17 +12,19 @@ const RAILS = [
   { id: 'skills', words: ['stack {}', 'tooling ~', 'astro *'] },
   { id: 'contact', words: ['hello ()', 'email @', 'tea ...'] },
 ];
-// Per-column level for the word.
+// Per-column level for the word. Cells are CSS grids (NOT absolute
+// positioning: inset-y-* maps to the wrong physical axis under vertical-rl,
+// and absolute-only cells collapse to zero width).
 const LAYOUT = [
-  'justify-start', // word top
-  'justify-center', // word middle
-  'justify-end', // word bottom
+  'self-start', // word top
+  'self-center', // word middle
+  'self-end', // word bottom
 ];
 const WORD_CLASS = 'vertical-rl rotate-180 dot-matrix-lg text-[40px] lg:text-[52px] leading-none whitespace-nowrap select-none';
 // Full-height dotted column rendered BEHIND the word; the word's solid
 // backdrop covers (masks) the dots where they overlap.
 const DOTS = '.'.repeat(90);
-const DOTS_CLASS = 'vertical-rl dot-matrix-lg text-[40px] lg:text-[52px] leading-none whitespace-nowrap select-none opacity-60';
+const DOTS_CLASS = 'vertical-rl dot-matrix-lg dot-matrix-dim text-[40px] lg:text-[52px] leading-none whitespace-nowrap select-none';
 ---
 <div aria-hidden="true" class="pointer-events-none fixed inset-y-0 right-0 z-0 hidden md:block w-1/2 overflow-hidden">
   <div class="absolute inset-y-0 right-10 lg:right-16 flex items-center justify-end gap-12 lg:gap-20">
@@ -30,9 +32,9 @@ const DOTS_CLASS = 'vertical-rl dot-matrix-lg text-[40px] lg:text-[52px] leading
       <div class="h-[70vh] overflow-hidden" data-rail-slot>
         <div class="rail-strip flex flex-col" data-rail-strip={col}>
           {RAILS.map((s) => (
-            <div class={`relative h-[70vh] shrink-0 flex flex-col items-center py-4 ${LAYOUT[col]}`}>
-              <span aria-hidden="true" class={`absolute inset-y-0 left-1/2 -translate-x-1/2 overflow-visible ${DOTS_CLASS}`}>{DOTS}</span>
-              <span class={`relative ${WORD_CLASS} bg-ink px-1 py-4`}>{s.words[col]}</span>
+            <div class="rail-cell grid h-[70vh] shrink-0">
+              <span aria-hidden="true" class={`${DOTS_CLASS} justify-self-center self-start`}>{DOTS}</span>
+              <span class={`${WORD_CLASS} justify-self-center ${LAYOUT[col]} relative bg-ink px-3 py-6`}>{s.words[col]}</span>
             </div>
           ))}
         </div>

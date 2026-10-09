@@ -71,10 +71,28 @@ h1, h2, h3 {
   opacity: 0.9;
 }
 
+/* Dimmer companion for backdrop dots (higher specificity: unlayered
+   custom CSS beats Tailwind's layered opacity utilities). */
+.dot-matrix-lg.dot-matrix-dim {
+  color: #54534d;
+  opacity: 1;
+}
+
 .rail-strip {
   will-change: transform;
 }
 
+/* Rail cells stack dots + word in one grid area (explicit CSS: Tailwind
+   arbitrary properties choke on the '/' in 'grid-area: 1 / 1').
+   Fixed single row + min-height:0 so the 3000px+ dots run can't stretch
+   the row (which would push centered/bottom words out of the slot). */
+.rail-cell {
+  grid-auto-rows: 100%;
+}
+.rail-cell > * {
+  grid-area: 1 / 1;
+  min-height: 0;
+}
 .vertical-rl {
   writing-mode: vertical-rl;
   text-orientation: mixed;
