@@ -38,7 +38,7 @@ Defined in `src/styles/global.css` (`@theme`).
 
 - Display/headings: `"Raleway"`, weights 200–500 (`h1/h2/h3` always Raleway via `global.css`).
 - Body: `"Inter"`, weights 200–500.
-- Mono: `"JetBrains Mono"`, weights 200–400. Brackets, labels, tags, stats meta.
+- Mono/labels: `"Open Sans"`, weights 300–500. Brackets, labels, tags, stats meta.
 - Pixel: `"Bitcount Grid Double"`, weights 300–500. Rail words only (`.dot-matrix-lg`, solid dim `#6f6e67` — the typeface is the dot matrix, no clip-texture).
 - Scale: hero `text-[13vw] sm:text-6xl md:text-7xl lg:text-8xl`; section titles `text-5xl md:text-6xl font-extralight`; body `17–18px / relaxed / font-light`.
 - Mono kickers look like `...HELLO, I AM...`, `...CAREER...`, `...STACK...`, `...CONTACT...`.
