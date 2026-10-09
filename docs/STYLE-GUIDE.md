@@ -14,6 +14,10 @@ ink, bone text, lavender `[ bracket ]` links, dot-matrix side rails.
 
 ## 2. Colors
 
+Dark is the default (`:root` values). Light mode overrides every token under
+`html[data-theme="light"]` — all Tailwind utilities reference the vars, so the
+whole site flips with zero class changes.
+
 | Token | Hex | Tailwind | Usage |
 |---|---|---|---|
 | `ink` | `#222222` | `bg-ink` | page background |
@@ -32,7 +36,18 @@ Rules:
 - Dividers: `border-t hairline` (`.hairline` sets `border-color: var(--color-line)`).
 - Selection: accent background, ink text (`src/styles/global.css`).
 
-Defined in `src/styles/global.css` (`@theme`).
+Defined in `src/styles/global.css` (`@theme` + `html[data-theme="light"]`).
+
+### Theming
+
+- Dark default; light override via CSS vars. A head-inline script sets
+  `documentElement.dataset.theme` from `localStorage` before first paint (no
+  flash); `BaseLayout` script syncs both toggles, persists, and updates
+  `meta theme-color`.
+- Toggles: `ThemeToggle.astro` in the header (left of menu) and the menu
+  overlay (left of close). Labels name the ACTION (`[ light ]` in dark mode).
+- When adding theme-dependent color, ALWAYS use a var token — never a raw
+  hex — or it won't flip. (Past traps: rail dots, scroll hint, selection.)
 
 ## 3. Typography
 
