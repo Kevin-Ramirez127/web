@@ -65,15 +65,15 @@ Defined in `src/styles/global.css` (`@theme`).
 
 ### Dot-matrix rails (`src/components/GlobalRails.astro`)
 
-One fixed rail for the whole page (desktop). Lives on the LEFT, spanning to
-mid-screen (`left-0 w-1/2`, words from `left-10 lg:left-16`), behind content:
+One fixed rail for the whole page (desktop). Lives on the RIGHT, spanning to
+mid-screen (`right-0 w-1/2`, words from `right-10 lg:right-16`), behind content:
 
 ```html
 <span class="vertical-rl rotate-180 dot-matrix-lg text-[40px] lg:text-[52px]">Golang .</span>
 ```
 
 - `.dot-matrix-lg`: Bitcount Grid Double, solid `#6f6e67` (no texture trick — the face is the matrix). Base `.dot-matrix` (5px 4px-grid clip-text) remains for small text.
-- 3 columns × 5 section cells (`top/about/experience/skills/contact`, `h-[70vh]` slots). Each column holds its word at a different level (top / middle / bottom) with 90-dot runs filling the rest of the column. An IntersectionObserver on `main section[id]` (middle viewport band) slides each strip to the active cell with a 0.06s per-column cascade (`src/lib/motion-config.ts` easing). Resize snaps instantly; reduced motion snaps.
+- 3 columns × 5 section cells (`top/about/experience/skills/contact`, `h-[70vh]` slots). Each column holds its word at a different level (top / middle / bottom), words only, no filler. An IntersectionObserver on `main section[id]` (middle viewport band) slides each strip to the active cell with a 0.06s per-column cascade (`src/lib/motion-config.ts` easing). Resize snaps instantly; reduced motion snaps.
 - No star/plus backdrops anywhere (`.plus-grid` / `.cross-grid` removed entirely).
 - Rail order must match section order in `src/pages/index.astro`.
 - Former per-section `SideRails.astro` was replaced by this fixed rail; do not reintroduce per-section rails.
