@@ -1,0 +1,138 @@
+---
+import SEO from '../components/SEO.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  path?: string;
+  image?: string;
+  noindex?: boolean;
+}
+
+const { title, description, path = '/', image, noindex = false } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <SEO title={title} description={description} path={path} image={image} noindex={noindex} />
+    <script is:inline>
+      // Flag JS-driven motion so CSS only hides animated elements when JS runs (no-JS fallback stays visible).
+      document.documentElement.classList.add('js-motion');
+    </script>
+  </head>
+  <body class="min-h-screen bg-ink text-bone antialiased">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:bg-accent focus:text-ink focus:px-3 focus:py-2 focus:font-matrix focus:text-sm">Skip to content</a>
+    <slot />
+    <script>
+      import { animate, inView, stagger } from 'motion';
+      import { MOTION } from '../lib/motion-config.ts';
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const showAll = () => {
+        document.querySelectorAll('.reveal, [data-hero]').forEach((el) => {
+          el.classList.add('is-visible');
+        });
+      };
+
+      if (reduceMotion) {
+        showAll();
+      } else {
+        // Hero entrance timeline (staggered rise + fade).
+        const heroEls = Array.from(document.querySelectorAll('#top [data-hero]'));
+        if (heroEls.length > 0) {
+          try {
+            animate(
+              heroEls,
+              { opacity: [0, 1], y: [MOTION.distance.heroRise, 0] },
+              { duration: MOTION.duration.base, easing: MOTION.easing.out, delay: stagger(MOTION.stagger.hero, { startDelay: 0.1 }) },
+            );
+          } catch {
+            heroEls.forEach((el) => el.classList.add('is-visible'));
+          }
+        }
+
+        // Scroll reveals (skip hero — already handled by the timeline).
+        const revealEls = Array.from(document.querySelectorAll('.reveal')).filter(
+          (el) => !el.closest('#top') || !el.hasAttribute('data-hero'),
+        );
+        revealEls.forEach((el) => {
+          const delay = Number(el.getAttribute('data-reveal-delay') ?? 0);
+          inView(
+            el,
+            // Motion v14 calls onStart(element, entry) — first arg IS the element.
+            (element) => {
+              try {
+                animate(
+                  element,
+                  { opacity: [0, 1], y: [MOTION.distance.rise, 0] },
+                  { duration: MOTION.duration.base, easing: MOTION.easing.out, delay },
+                );
+              } catch {
+                element.classList.add('is-visible');
+              }
+            },
+            { margin: MOTION.viewport.margin },
+          );
+        });
+      }
+
+      // Menu overlay (Motion-driven fade + link stagger).
+      const btn = document.getElementById('menu-btn');
+      const overlay = document.getElementById('menu-overlay');
+      const closeBtn = document.getElementById('menu-close');
+      const menuLinks = () => Array.from(overlay?.querySelectorAll('[data-menu-link]') ?? []);
+      let menuOpen = false;
+
+      async function setMenu(open) {
+        if (!overlay || !btn) return;
+        menuOpen = open;
+        btn.setAttribute('aria-expanded', String(open));
+        if (open) {
+          overlay.classList.remove('pointer-events-none');
+          document.body.style.overflow = 'hidden';
+          closeBtn?.focus();
+          if (reduceMotion) {
+            overlay.classList.remove('opacity-0');
+          } else {
+            try {
+              await animate(overlay, { opacity: [0, 1] }, { duration: MOTION.duration.fast, easing: MOTION.easing.out }).finished.catch(() => {});
+              overlay.classList.remove('opacity-0');
+              animate(
+                menuLinks(),
+                { opacity: [0, 1], y: [18, 0] },
+                { duration: MOTION.duration.fast, easing: MOTION.easing.out, delay: stagger(MOTION.stagger.menu) },
+              );
+            } catch {
+              overlay.classList.remove('opacity-0');
+            }
+          }
+        } else {
+          document.body.style.overflow = '';
+          if (reduceMotion) {
+            overlay.classList.add('opacity-0');
+            overlay.classList.add('pointer-events-none');
+          } else {
+            try {
+              await animate(overlay, { opacity: [1, 0] }, { duration: MOTION.duration.instant, easing: MOTION.easing.out }).finished.catch(() => {});
+            } catch {
+              overlay.classList.add('opacity-0');
+            }
+            overlay.classList.add('pointer-events-none');
+          }
+          btn?.focus();
+        }
+      }
+
+      btn?.addEventListener('click', () => setMenu(true));
+      closeBtn?.addEventListener('click', () => setMenu(false));
+      overlay?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menuOpen) setMenu(false);
+      });
+    </script>
+  </body>
+</html>

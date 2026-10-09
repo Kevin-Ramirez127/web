@@ -1,0 +1,35 @@
+---
+const groups = [
+  { title: 'Frontend Development', tags: ['React.js','Astro','TypeScript','Tailwind CSS','JavaScript','HTML','CSS','Zustand','Responsive Design'] },
+  { title: 'Automation', tags: ['Docker','Google Apps Script','CI/CD','GitHub Actions'] },
+  { title: 'Performance & Testing', tags: ['Lighthouse Optimization','Jest','Web Vitals'] },
+  { title: 'Web Technologies', tags: ['HTML5 & CSS3','Web APIs','OpenAI API'] },
+  { title: 'Backend & Databases', tags: ['Node.js','Express.js','PostgreSQL','MongoDB','REST APIs'] },
+  { title: 'Tools & Workflow', tags: ['Git & GitHub','Figma','Webpack / Vite','NPM / Yarn / Pnpm'] },
+];
+const extra = ['Python','Bash Scripting','Vercel','Redux','Zustand','Cypress','Chrome extensions','Notion','Jira','Figma','Slack','Trello'];
+---
+<section id="skills" class="relative border-t hairline overflow-hidden">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 plus-grid opacity-50"></div>
+  <div class="relative mx-auto max-w-6xl px-6 md:px-10 py-20 md:py-28">
+    <p class="reveal font-matrix text-xs tracking-[0.25em] text-bone-faint">...STACK...</p>
+    <h2 class="reveal mt-3 text-5xl md:text-6xl font-extralight tracking-tight">Skills</h2>
+    <p class="reveal mt-4 max-w-xl text-bone-faint font-light">Modern technologies and automation tooling.</p>
+
+    <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-line border hairline">
+      {groups.map(g => (
+        <div class="reveal bg-ink p-6 md:p-7">
+          <h3 class="text-xl font-light text-bone">{g.title}</h3>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {g.tags.map(t => (
+              <span class="font-matrix text-xs border hairline px-2.5 py-1 text-bone-dim hover:text-accent hover:border-accent/50 transition">{t}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <h3 class="reveal mt-10 font-matrix text-xs tracking-[0.2em] text-bone-faint">ADDITIONAL TECHNOLOGIES</h3>
+    <p class="reveal mt-4 font-light text-bone/80 leading-loose">{extra.join(' · ')}</p>
+  </div>
+</section>

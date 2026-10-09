@@ -1,0 +1,62 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.*
+
+# Build outputs
+dist/
+.output/
+
+# Astro
+.astro/
+
+# pnpm
+pnpm-store/
+store/
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editors / IDEs
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swp
+*~
+
+# TypeScript
+*.tsbuildinfo
+
+# Testing / coverage
+coverage/
+.nyc_output/
+
+# Temporary
+tmp/
+temp/
+reference/

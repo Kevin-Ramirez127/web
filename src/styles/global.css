@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;300;400;500&family=JetBrains+Mono:wght@200;300;400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #1c1b19;
+  --color-ink-soft: #232221;
+  --color-bone: #ece2cc;
+  --color-bone-dim: #c8bfa9;
+  --color-bone-faint: #9d9583;
+  --color-accent: #8b8cff;
+  --color-accent-dim: #6f70d6;
+  --color-line: #33322f;
+  --color-dot: #3b3a37;
+
+  --font-display: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-matrix: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html {
+  background: var(--color-ink);
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-ink);
+  color: var(--color-bone);
+  font-family: var(--font-display);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #141412;
+}
+
+/* subtle cross grid like reference */
+.cross-grid {
+  background-image:
+    radial-gradient(circle, rgba(236,226,204,0.09) 1px, transparent 1.4px),
+    linear-gradient(transparent, transparent);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse 90% 90% at 70% 30%, black 30%, transparent 75%);
+}
+
+.plus-grid {
+  background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23393735' font-family='monospace' font-size='14' %3E%3Ctext x='20' y='30'%3E%2B%3C/text%3E%3Ctext x='90' y='20'%3E%2B%3C/text%3E%3Ctext x='60' y='90'%3E%2B%3C/text%3E%3Ctext x='120' y='110'%3E%2B%3C/text%3E%3C/g%3E%3C/svg%3E");
+}
+
+.dot-matrix {
+  font-family: var(--font-matrix);
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  /* dotted LED feel */
+  color: transparent;
+  -webkit-text-stroke: 0;
+  background-image: radial-gradient(circle, #4a4946 1.3px, transparent 1.6px);
+  background-size: 5px 5px;
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 0.9;
+}
+
+.dot-matrix-solid {
+  font-family: var(--font-matrix);
+  color: #454441;
+  letter-spacing: 0.22em;
+}
+
+.vertical-rl {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.bracket-link {
+  color: var(--color-accent);
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  transition: color .25s ease, transform .25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.bracket-link:hover {
+  color: #b3b4ff;
+}
+.bracket-link .br {
+  opacity: 0.9;
+  font-family: var(--font-matrix);
+  font-weight: 300;
+}
+
+.hairline {
+  border-color: var(--color-line);
+}
+
+/* Motion system (Motion One / Framer Motion successor).
+   Elements start hidden ONLY when JS motion is active (html.js-motion),
+   so no-JS and reduced-motion users always see content.
+   Durations/easings live in src/lib/motion-config.ts. */
+html.js-motion .reveal,
+html.js-motion [data-hero] {
+  opacity: 0;
+}
+
+.reveal,
+[data-hero] {
+  will-change: opacity, transform;
+}
+/* Fallback state (reduced-motion, no-JS, animation failure).
+   html-prefixed so it always beats the html.js-motion hidden rule above. */
+html .reveal.is-visible,
+html [data-hero].is-visible {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* Bracket-link press feedback (pairs with Motion fade/slide). */
+.bracket-link:active {
+  transform: translateY(1px);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js-motion .reveal,
+  html.js-motion [data-hero] { opacity: 1; }
+  .reveal { transition: none; opacity: 1; translate: none; }
+  html { scroll-behavior: auto; }
+}

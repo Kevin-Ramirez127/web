@@ -1,0 +1,16 @@
+{
+  "name": "Kevin Ramirez — Automation & Web Development",
+  "short_name": "Kevin Ramirez",
+  "description": "I create modern web experiences and automate processes that transform data into effective decisions.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1c1b19",
+  "theme_color": "#1c1b19",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
