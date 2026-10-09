@@ -46,7 +46,7 @@ Defined in `src/styles/global.css` (`@theme`).
 ## 4. Layout
 
 - Container: `mx-auto max-w-6xl px-6 md:px-10`.
-- Sections: `py-20 md:py-28`, separated by `border-t hairline`.
+- Sections: `py-20 md:py-28`, flowing continuously with no divider lines (removed).
 - Hero: `min-h-screen flex flex-col`, content vertically centered (`justify-center pt-28 pb-16`), `...Scroll...` pinned at bottom.
 - Stats / skills grids: `gap-px bg-line border hairline` with `bg-ink` cells (1px hairline grid trick).
 
