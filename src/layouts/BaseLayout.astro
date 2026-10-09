@@ -84,7 +84,7 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
       const btn = document.getElementById('menu-btn');
       const overlay = document.getElementById('menu-overlay');
       const closeBtn = document.getElementById('menu-close');
-      const menuLinks = () => Array.from(overlay?.querySelectorAll('[data-menu-link]') ?? []);
+      const menuLinks = () => Array.from(overlay?.querySelectorAll('[data-menu-link]') ?? []) as HTMLElement[];
       let menuOpen = false;
 
       async function setMenu(open: boolean) {
@@ -92,17 +92,23 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
         menuOpen = open;
         btn.setAttribute('aria-expanded', String(open));
         if (open) {
+          const links = menuLinks();
           overlay.classList.remove('pointer-events-none');
           document.body.style.overflow = 'hidden';
           closeBtn?.focus();
           if (reduceMotion) {
+            links.forEach((l) => { l.style.opacity = ''; l.style.transform = ''; });
             overlay.classList.remove('opacity-0');
           } else {
+            // Park links hidden BEFORE the overlay fades in, or they flash
+            // at full opacity and restart (blink). Anchors use
+            // transition-colors so this applies instantly.
+            links.forEach((l) => { l.style.opacity = '0'; l.style.transform = 'translateY(18px)'; });
             try {
               await animate(overlay, { opacity: [0, 1] }, { duration: MOTION.duration.fast, ease: MOTION.ease.out }).finished.catch(() => {});
               overlay.classList.remove('opacity-0');
               animate(
-                menuLinks(),
+                links,
                 { opacity: [0, 1], y: [18, 0] },
                 { duration: MOTION.duration.fast, ease: MOTION.ease.out, delay: stagger(MOTION.stagger.menu) },
               );

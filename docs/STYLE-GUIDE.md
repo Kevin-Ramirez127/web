@@ -56,12 +56,13 @@ Defined in `src/styles/global.css` (`@theme`).
 
 ```html
 <a href="#contact" class="bracket-link text-2xl">
-  <span class="br">[</span><span>Send Message</span><span class="br">]</span>
+  <span class="br">[</span><span class="fill-label"><span>Send Message</span><span class="fill-wipe" aria-hidden="true">Send Message</span></span><span class="br">]</span>
 </a>
 ```
 
-- Accent, `inline-flex gap-0.45rem`; brackets use mono font.
-- Hover: `#b3b4ff`. Active: 1px press (`transform: translateY(1px)`).
+- Accent, `inline-flex gap-0.45rem`; brackets use mono font, always accent.
+- Hover/focus-visible: accent box wipes left→right (`::before` scaleX) while the ink `.fill-wipe` copy wipes in via `clip-path` (same .45s easing, edges synced) — letters flip as the fill passes. Active: 1px press.
+- Menu links (`[data-menu-link]`) use `transition-colors` (not `transition`) and are parked `opacity:0` before the overlay fades, so they never flash before their stagger (no blink).
 
 ### Dot-matrix rails (`src/components/GlobalRails.astro`)
 

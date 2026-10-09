@@ -107,13 +107,49 @@ h1, h2, h3 {
   align-items: center;
   gap: 0.45rem;
 }
-.bracket-link:hover {
-  color: #b3b4ff;
-}
 .bracket-link .br {
   opacity: 0.9;
   font-family: var(--font-matrix);
   font-weight: 300;
+}
+
+/* Fill-wipe hover: accent box sweeps left→right behind the label while an
+   ink-colored copy wipes in over it (same duration/easing, edges synced),
+   flipping letters exactly as the fill passes. Brackets stay accent. */
+.fill-label {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+  padding: 0 0.3em;
+  color: var(--color-bone);
+  white-space: nowrap;
+}
+.fill-label::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fill-wipe {
+  position: absolute;
+  inset: 0;
+  padding: inherit;
+  color: var(--color-ink);
+  white-space: nowrap;
+  clip-path: inset(-20% 100% -20% 0);
+  transition: clip-path 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.bracket-link:hover .fill-label::before,
+.bracket-link:focus-visible .fill-label::before {
+  transform: scaleX(1);
+}
+.bracket-link:hover .fill-wipe,
+.bracket-link:focus-visible .fill-wipe {
+  clip-path: inset(-20% 0 -20% 0);
 }
 
 .hairline {
@@ -155,5 +191,6 @@ html [data-hero].is-visible {
   html.js-motion .reveal,
   html.js-motion [data-hero] { opacity: 1; }
   .reveal { transition: none; opacity: 1; translate: none; }
+  .fill-label, .fill-label::before { transition: none; }
   html { scroll-behavior: auto; }
 }
