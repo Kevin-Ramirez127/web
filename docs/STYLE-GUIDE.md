@@ -114,7 +114,7 @@ Config: `src/lib/motion-config.ts`. Runtime: `src/layouts/BaseLayout.astro`.
 | `duration.instant` | `0.18s` | menu close |
 | `duration.fast` | `0.35s` | menu open / links |
 | `duration.base` | `0.7s` | reveals, hero |
-| `easing.out` | `[0.22, 1, 0.36, 1]` | everything |
+| `ease.out` | `[0.22, 1, 0.36, 1]` | everything (motion v14 key is `ease`, not `easing`) |
 | `distance.rise` | `22px` | scroll reveals |
 | `distance.heroRise` | `28px` | hero entrance |
 | `stagger.hero` | `0.09s` | hero sequence |

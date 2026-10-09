@@ -48,7 +48,7 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
             animate(
               heroEls,
               { opacity: [0, 1], y: [MOTION.distance.heroRise, 0] },
-              { duration: MOTION.duration.base, easing: MOTION.easing.out, delay: stagger(MOTION.stagger.hero, { startDelay: 0.1 }) },
+              { duration: MOTION.duration.base, ease: MOTION.ease.out, delay: stagger(MOTION.stagger.hero, { startDelay: 0.1 }) },
             );
           } catch {
             heroEls.forEach((el) => el.classList.add('is-visible'));
@@ -69,7 +69,7 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
                 animate(
                   element,
                   { opacity: [0, 1], y: [MOTION.distance.rise, 0] },
-                  { duration: MOTION.duration.base, easing: MOTION.easing.out, delay },
+                  { duration: MOTION.duration.base, ease: MOTION.ease.out, delay },
                 );
               } catch {
                 element.classList.add('is-visible');
@@ -87,7 +87,7 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
       const menuLinks = () => Array.from(overlay?.querySelectorAll('[data-menu-link]') ?? []);
       let menuOpen = false;
 
-      async function setMenu(open) {
+      async function setMenu(open: boolean) {
         if (!overlay || !btn) return;
         menuOpen = open;
         btn.setAttribute('aria-expanded', String(open));
@@ -99,12 +99,12 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
             overlay.classList.remove('opacity-0');
           } else {
             try {
-              await animate(overlay, { opacity: [0, 1] }, { duration: MOTION.duration.fast, easing: MOTION.easing.out }).finished.catch(() => {});
+              await animate(overlay, { opacity: [0, 1] }, { duration: MOTION.duration.fast, ease: MOTION.ease.out }).finished.catch(() => {});
               overlay.classList.remove('opacity-0');
               animate(
                 menuLinks(),
                 { opacity: [0, 1], y: [18, 0] },
-                { duration: MOTION.duration.fast, easing: MOTION.easing.out, delay: stagger(MOTION.stagger.menu) },
+                { duration: MOTION.duration.fast, ease: MOTION.ease.out, delay: stagger(MOTION.stagger.menu) },
               );
             } catch {
               overlay.classList.remove('opacity-0');
@@ -117,7 +117,7 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
             overlay.classList.add('pointer-events-none');
           } else {
             try {
-              await animate(overlay, { opacity: [1, 0] }, { duration: MOTION.duration.instant, easing: MOTION.easing.out }).finished.catch(() => {});
+              await animate(overlay, { opacity: [1, 0] }, { duration: MOTION.duration.instant, ease: MOTION.ease.out }).finished.catch(() => {});
             } catch {
               overlay.classList.add('opacity-0');
             }

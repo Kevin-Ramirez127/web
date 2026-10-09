@@ -7,9 +7,10 @@ export const MOTION = {
     base: 0.7,
     slow: 0.9,
   },
-  easing: {
-    out: [0.22, 1, 0.36, 1] as const,
-    spring: { type: 'spring', stiffness: 260, damping: 28 } as const,
+  // NOTE: motion v14 names this option `ease` (not `easing`). The tuple is
+  // typed mutable on purpose: `Easing` aka BezierDefinition rejects readonly.
+  ease: {
+    out: [0.22, 1, 0.36, 1] as [number, number, number, number],
   },
   distance: {
     rise: 22,
@@ -22,6 +23,7 @@ export const MOTION = {
   viewport: {
     // Mirrors the old IntersectionObserver threshold (~0.12) with a margin
     // so reveals trigger slightly before entering the viewport.
-    margin: '-8% 0px -8% 0px',
+    // `as const`: inView's MarginType wants the literal, not `string`.
+    margin: '-8% 0px -8% 0px' as const,
   },
-} as const;
+};

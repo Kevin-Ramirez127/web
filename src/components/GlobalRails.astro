@@ -67,7 +67,7 @@ const DOTS_CLASS = 'vertical-rl dot-matrix-lg dot-matrix-dim text-[40px] lg:text
         animate(
           strip,
           { y },
-          { duration: MOTION.duration.base, easing: MOTION.easing.out, delay: col * 0.06 },
+          { duration: MOTION.duration.base, ease: MOTION.ease.out, delay: col * 0.06 },
         );
       } catch {
         strip.style.transform = `translateY(${y}px)`;
