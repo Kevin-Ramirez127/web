@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;300;400;500&family=JetBrains+Mono:wght@200;300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bitcount+Grid+Double:wght@300;400;500&family=Inter+Tight:wght@200;300;400;500&family=JetBrains+Mono:wght@200;300;400&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -14,6 +14,7 @@
 
   --font-display: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
   --font-matrix: "JetBrains Mono", ui-monospace, monospace;
+  --font-pixel: "Bitcount Grid Double", "JetBrains Mono", ui-monospace, monospace;
 }
 
 html {
@@ -68,20 +69,15 @@ body {
   letter-spacing: 0.22em;
 }
 
-/* Large variant for the fixed GlobalRails (bigger glyphs need bigger dots). */
+/* Large variant for the fixed GlobalRails. Rendered in Bitcount Grid
+   Double — the typeface itself is the dot matrix, so no background-clip
+   texture trick here. */
 .dot-matrix-lg {
-  font-family: var(--font-matrix);
+  font-family: var(--font-pixel);
   font-weight: 400;
-  letter-spacing: 0.16em;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  /* Fine dense grid: ~2 dots across a glyph stroke so letterforms stay
-     whole instead of breaking into half-circle fragments. */
-  background-image: radial-gradient(circle, #5f5e58 1.5px, transparent 1.9px);
-  background-size: 5px 5px;
-  -webkit-background-clip: text;
-  background-clip: text;
-  opacity: 0.95;
+  letter-spacing: 0.08em;
+  color: #6f6e67;
+  opacity: 0.9;
 }
 
 .rail-strip {
