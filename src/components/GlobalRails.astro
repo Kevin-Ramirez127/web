@@ -1,35 +1,43 @@
 ---
 // Single fixed dot-matrix rail for the whole page (desktop).
+// Lives on the LEFT, spanning to mid-screen. Each column holds its word at
+// a different vertical level, trailed by dot-runs that fill the column.
 // Order MUST match the <section> order in src/pages/index.astro:
 // top → about → experience → skills → contact.
 // As the active section changes, each column slides up to its word.
 const RAILS = [
-  { id: 'top', words: ['Arch Linux', 'TypeScript ...', 'Golang .'] },
+  { id: 'top', words: ['Linux Arch Cmd', 'TypeScript ...', 'Golang .'] },
   { id: 'about', words: ['about me .', '(): progr', 'Linux Arch'] },
   { id: 'experience', words: ['career :: log', 'process >>', 'teams ++'] },
   { id: 'skills', words: ['stack {}', 'tooling ~', 'astro *'] },
   { id: 'contact', words: ['hello ()', 'email @', 'tea ...'] },
 ];
-const COLS = RAILS[0].words.length;
+// Per-column layout: where the word sits + which sides get dot-fill.
+const LAYOUT = [
+  { align: 'justify-start', before: false, after: true }, // word top, dots fill down
+  { align: 'justify-center', before: true, after: true }, // word middle, dots fill both ways
+  { align: 'justify-end', before: true, after: false }, // word bottom, dots fill up
+];
+const DOTS = '.'.repeat(90);
+const WORD_CLASS = 'vertical-rl rotate-180 dot-matrix-lg text-[40px] lg:text-[52px] leading-none whitespace-nowrap select-none';
+const DOTS_CLASS = 'vertical-rl dot-matrix-lg text-[40px] lg:text-[52px] leading-none whitespace-nowrap select-none';
 ---
-<div aria-hidden="true" class="pointer-events-none fixed inset-y-0 right-0 z-0 hidden md:block w-[36%] overflow-hidden">
-  <div class="absolute inset-0 plus-grid opacity-70"></div>
-  <div class="absolute inset-y-0 right-10 lg:right-16 flex items-center justify-end gap-12 lg:gap-20">
-    {Array.from({ length: COLS }).map((_, col) => (
+<div aria-hidden="true" class="pointer-events-none fixed inset-y-0 left-0 z-0 hidden md:block w-1/2 overflow-hidden">
+  <div class="absolute inset-y-0 left-10 lg:left-16 flex items-center gap-12 lg:gap-20">
+    {RAILS[0].words.map((_, col) => (
       <div class="h-[70vh] overflow-hidden" data-rail-slot>
         <div class="rail-strip flex flex-col" data-rail-strip={col}>
           {RAILS.map((s) => (
-            <div class="h-[70vh] shrink-0 flex items-center justify-center">
-              <span class="vertical-rl rotate-180 dot-matrix-lg text-[40px] lg:text-[52px] leading-none whitespace-nowrap select-none">{s.words[col]}</span>
+            <div class={`h-[70vh] shrink-0 flex flex-col items-center py-4 ${LAYOUT[col].align}`}>
+              {LAYOUT[col].before && <span class={DOTS_CLASS}>{DOTS}</span>}
+              <span class={WORD_CLASS}>{s.words[col]}</span>
+              {LAYOUT[col].after && <span class={DOTS_CLASS}>{DOTS}</span>}
             </div>
           ))}
         </div>
       </div>
     ))}
   </div>
-</div>
-<div aria-hidden="true" class="pointer-events-none fixed inset-0 z-0 md:hidden overflow-hidden opacity-60">
-  <div class="absolute inset-0 plus-grid"></div>
 </div>
 
 <script>

@@ -16,14 +16,14 @@ ink, bone text, lavender `[ bracket ]` links, dot-matrix side rails.
 
 | Token | Hex | Tailwind | Usage |
 |---|---|---|---|
-| `ink` | `#1c1b19` | `bg-ink` | page background |
-| `ink-soft` | `#232221` | `bg-ink-soft/40` | card / form surface (always with alpha) |
-| `bone` | `#ece2cc` | `text-bone` | headings, primary text |
-| `bone-dim` | `#c8bfa9` | `text-bone-dim` | tags, secondary text |
-| `bone-faint` | `#9d9583` | `text-bone-faint` | labels, meta, placeholders |
-| `accent` | `#8b8cff` | `text-accent` | bracket links, highlights |
-| `accent-dim` | `#6f70d6` | — | hover borders, focus fallbacks |
-| `line` | `#33322f` | `bg-line` / `border-line` | hairlines, grid gaps |
+| `ink` | `#222222` | `bg-ink` | page background |
+| `ink-soft` | `#2a2a2a` | `bg-ink-soft/40` | card / form surface (always with alpha) |
+| `bone` | `#F1E8D9` | `text-bone` | headings, primary text |
+| `bone-dim` | `#D9CFB8` | `text-bone-dim` | tags, secondary text |
+| `bone-faint` | `#A89D87` | `text-bone-faint` | labels, meta, placeholders |
+| `accent` | `#8E8BFF` | `text-accent` | bracket links, highlights |
+| `accent-dim` | `#7172D8` | — | hover borders, focus fallbacks |
+| `line` | `#3a3a3a` | `bg-line` / `border-line` | hairlines, grid gaps |
 
 Rules:
 
@@ -36,7 +36,8 @@ Defined in `src/styles/global.css` (`@theme`).
 
 ## 3. Typography
 
-- Display: `"Inter Tight"`, weights 200–500. Headings use `font-extralight` + `tracking-tight`.
+- Display/headings: `"Raleway"`, weights 200–500 (`h1/h2/h3` always Raleway via `global.css`).
+- Body: `"Inter"`, weights 200–500.
 - Mono: `"JetBrains Mono"`, weights 200–400. Brackets, labels, tags, stats meta.
 - Pixel: `"Bitcount Grid Double"`, weights 300–500. Rail words only (`.dot-matrix-lg`, solid dim `#6f6e67` — the typeface is the dot matrix, no clip-texture).
 - Scale: hero `text-[13vw] sm:text-6xl md:text-7xl lg:text-8xl`; section titles `text-5xl md:text-6xl font-extralight`; body `17–18px / relaxed / font-light`.
@@ -64,15 +65,17 @@ Defined in `src/styles/global.css` (`@theme`).
 
 ### Dot-matrix rails (`src/components/GlobalRails.astro`)
 
-One fixed rail for the whole page (desktop, right edge, behind content) — not per-section:
+One fixed rail for the whole page (desktop). Lives on the LEFT, spanning to
+mid-screen (`left-0 w-1/2`, words from `left-10 lg:left-16`), behind content:
 
 ```html
 <span class="vertical-rl rotate-180 dot-matrix-lg text-[40px] lg:text-[52px]">Golang .</span>
 ```
 
 - `.dot-matrix-lg`: Bitcount Grid Double, solid `#6f6e67` (no texture trick — the face is the matrix). Base `.dot-matrix` (5px 4px-grid clip-text) remains for small text.
-- 3 columns × 5 section cells (`top/about/experience/skills/contact`, `h-[70vh]` slots). An IntersectionObserver on `main section[id]` (middle viewport band) slides each strip to the active cell with a 0.06s per-column cascade (`src/lib/motion-config.ts` easing). Resize snaps instantly; reduced motion snaps.
-- Rail order must match section order in `src/pages/index.astro`. Backdrop: `.plus-grid` + faint radial dots; mobile gets a fixed faint plus-grid only.
+- 3 columns × 5 section cells (`top/about/experience/skills/contact`, `h-[70vh]` slots). Each column holds its word at a different level (top / middle / bottom) with 90-dot runs filling the rest of the column. An IntersectionObserver on `main section[id]` (middle viewport band) slides each strip to the active cell with a 0.06s per-column cascade (`src/lib/motion-config.ts` easing). Resize snaps instantly; reduced motion snaps.
+- No star/plus backdrops anywhere (`.plus-grid` / `.cross-grid` removed entirely).
+- Rail order must match section order in `src/pages/index.astro`.
 - Former per-section `SideRails.astro` was replaced by this fixed rail; do not reintroduce per-section rails.
 
 ### Tags / meta chips
