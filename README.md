@@ -4,7 +4,7 @@ Astro + Tailwind CSS 4 portfolio. Content from [ramirezkevin.dev](https://www.ra
 
 ## Stack
 
-- Astro 5 + `@astrojs/node` (static pages, server `POST /api/contact`)
+- Astro 5 + `@astrojs/vercel` (static pages, server `POST /api/contact`)
 - Tailwind 4 via `@tailwindcss/vite`
 - TypeScript strict (`pnpm check`)
 - Resend for contact email delivery
@@ -16,9 +16,11 @@ Astro + Tailwind CSS 4 portfolio. Content from [ramirezkevin.dev](https://www.ra
 pnpm install
 pnpm dev      # http://localhost:4321
 pnpm check    # astro typecheck, must be 0 errors
-pnpm build    # -> dist/client + dist/server
-PORT=4321 node ./dist/server/entry.mjs   # serve production build
+pnpm build    # Vercel-ready output (static + serverless /api/contact)
 ```
+
+Deploy on Vercel with Framework Preset = Astro, plus `RESEND_API_KEY` +
+`CONTACT_TO_EMAIL` env vars (see `.env.example`).
 
 Node 22 + pnpm 11 tested. If you see `ERR_PNPM_IGNORED_BUILDS`, run `pnpm approve-builds --all`.
 
