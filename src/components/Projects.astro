@@ -1,32 +1,25 @@
 ---
 const projects = [
   {
-    title: 'Real-Time SLA Monitor',
-    org: 'Arbusta · Internal',
-    summary: 'Browser extensions capturing DOM interactions, streamed through microservices for real-time analysis. Measured SLA live across 10+ simultaneous projects.',
-    points: ['Cut manual reporting time', 'Improved operational visibility'],
-    stack: ['Chrome extensions', 'TypeScript', 'Node.js', 'Docker', 'AWS'],
+    name: 'rempkg',
+    url: 'https://github.com/Kevin-Ramirez127/rempkg',
+    description: 'One wrapper for many package managers to remember and tag what you install.',
+    meta: 'Go · ★ 2',
+    stack: ['Go', 'CLI'],
   },
   {
-    title: 'Meta CAPI Gateway',
-    org: 'Arbusta — Meta · Client work',
-    summary: 'Deployed and documented the Meta Conversions API Gateway on AWS so clients get reliable conversion tracking and better campaign results.',
-    points: ['Robust, scalable integration', 'Standardized rollout docs'],
-    stack: ['CAPI', 'AWS', 'TypeScript', 'Facebook API'],
+    name: 'quick-bitwarden',
+    url: 'https://github.com/Kevin-Ramirez127/quick-bitwarden',
+    description: 'A quick way to copy your Bitwarden passwords that works on rofi/wofi window.',
+    meta: 'Shell · ★ 3',
+    stack: ['Shell', 'Rofi', 'Wofi'],
   },
   {
-    title: 'Entrepreneurship Platform',
-    org: 'Bridge for Billions · Product',
-    summary: 'Custom React components plus backend-request optimization on the core platform — faster modules, lower infra cost, and a user panel people trust.',
-    points: ['Fewer backend requests', 'Fixed trust-breaking UI bugs'],
-    stack: ['React', 'Redux-Saga', 'Ant Design', 'CSS'],
-  },
-  {
-    title: 'Process Automation Toolkit',
-    org: 'Independent · 15+ custom tools',
-    summary: 'Bots and Apps Script workflows that erase repetitive manual work: audit prep, quality monitoring, and reports that feed real decisions.',
-    points: ['Fewer manual errors', 'Audit-ready data'],
-    stack: ['Google Apps Script', 'GitHub Actions', 'CI/CD', 'JavaScript'],
+    name: 'r-modals',
+    url: 'https://github.com/Kevin-Ramirez127/r-modals',
+    description: 'Simple and fast modals made with Rust.',
+    meta: 'Rust',
+    stack: ['Rust'],
   },
 ];
 ---
@@ -34,30 +27,30 @@ const projects = [
   <div class="relative mx-auto max-w-6xl px-6 md:px-10 py-20 md:py-28">
     <p class="reveal font-matrix text-xs tracking-[0.25em] text-bone-faint">...WORK...</p>
     <h2 class="reveal mt-3 text-5xl md:text-6xl font-extralight tracking-tight">Projects</h2>
-    <p class="reveal mt-4 max-w-xl text-bone-faint font-light">Selected work — automation-first builds with measurable impact.</p>
+    <p class="reveal mt-4 max-w-xl text-bone-faint font-light">Open source — built, used, and maintained by me.</p>
 
-    <div class="mt-12 grid md:grid-cols-2 gap-px bg-line border hairline">
+    <div class="mt-12 space-y-6">
       {projects.map((p) => (
-        <article class="reveal bg-ink-soft/40 p-6 md:p-8 hover:border-accent/40 transition-colors flex flex-col">
-          <p class="font-matrix text-[11px] tracking-widest text-bone-faint">{p.org}</p>
-          <h3 class="mt-3 text-2xl font-light text-bone">{p.title}</h3>
-          <p class="mt-3 text-bone/85 font-light leading-relaxed flex-1">{p.summary}</p>
-          <ul class="mt-4 space-y-1.5 font-light text-bone/85">
-            {p.points.map((pt) => (
-              <li class="flex gap-3"><span class="text-accent">·</span><span>{pt}</span></li>
-            ))}
-          </ul>
-          <div class="mt-5 flex flex-wrap gap-2">
-            {p.stack.map((s) => (
-              <span class="font-matrix text-xs border hairline px-2.5 py-1 text-bone-dim">{s}</span>
-            ))}
+        <article class="reveal border hairline bg-ink-soft/40 p-6 md:p-8 hover:border-accent/40 transition-colors">
+          <div class="flex flex-wrap items-baseline justify-between gap-3">
+            <h3 class="text-2xl md:text-3xl font-light text-bone">
+              <a href={p.url} target="_blank" rel="noreferrer" class="hover:text-accent transition-colors">{p.name}</a>
+            </h3>
+            <p class="font-matrix text-[11px] tracking-widest text-bone-faint">{p.meta}</p>
+          </div>
+          <p class="mt-3 max-w-3xl text-bone/85 font-light leading-relaxed">{p.description}</p>
+          <div class="mt-5 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex flex-wrap gap-2">
+              {p.stack.map((s) => (
+                <span class="font-matrix text-xs border hairline px-2.5 py-1 text-bone-dim">{s}</span>
+              ))}
+            </div>
+            <a href={p.url} target="_blank" rel="noreferrer" class="bracket-link text-xl">
+              <span class="br">[</span><span>Code</span><span class="br">]</span><span class="fill-wipe" aria-hidden="true"><span class="br">[</span><span>Code</span><span class="br">]</span></span>
+            </a>
           </div>
         </article>
       ))}
     </div>
-
-    <p class="reveal mt-8 text-bone-faint font-light">
-      Full case studies available on request — <a href="#contact" class="bracket-link text-lg"><span class="br">[</span><span>Get in touch</span><span class="br">]</span><span class="fill-wipe" aria-hidden="true"><span class="br">[</span><span>Get in touch</span><span class="br">]</span></span></a>
-    </p>
   </div>
 </section>
