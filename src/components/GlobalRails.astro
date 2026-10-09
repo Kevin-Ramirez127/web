@@ -19,6 +19,10 @@ const LAYOUT = [
   'justify-end', // word bottom
 ];
 const WORD_CLASS = 'vertical-rl rotate-180 dot-matrix-lg text-[40px] lg:text-[52px] leading-none whitespace-nowrap select-none';
+// Full-height dotted column rendered BEHIND the word; the word's solid
+// backdrop covers (masks) the dots where they overlap.
+const DOTS = '.'.repeat(90);
+const DOTS_CLASS = 'vertical-rl dot-matrix-lg text-[40px] lg:text-[52px] leading-none whitespace-nowrap select-none opacity-60';
 ---
 <div aria-hidden="true" class="pointer-events-none fixed inset-y-0 right-0 z-0 hidden md:block w-1/2 overflow-hidden">
   <div class="absolute inset-y-0 right-10 lg:right-16 flex items-center justify-end gap-12 lg:gap-20">
@@ -26,8 +30,11 @@ const WORD_CLASS = 'vertical-rl rotate-180 dot-matrix-lg text-[40px] lg:text-[52
       <div class="h-[70vh] overflow-hidden" data-rail-slot>
         <div class="rail-strip flex flex-col" data-rail-strip={col}>
           {RAILS.map((s) => (
-            <div class={`h-[70vh] shrink-0 flex flex-col items-center py-4 ${LAYOUT[col]}`}>
-              <span class={WORD_CLASS}>{s.words[col]}</span>
+            <div class="relative h-[70vh] shrink-0">
+              <span aria-hidden="true" class={`absolute inset-y-0 left-1/2 -translate-x-1/2 overflow-visible ${DOTS_CLASS}`}>{DOTS}</span>
+              <div class={`absolute inset-0 flex flex-col items-center py-4 ${LAYOUT[col]}`}>
+                <span class={`${WORD_CLASS} bg-ink px-1 py-4`}>{s.words[col]}</span>
+              </div>
             </div>
           ))}
         </div>
