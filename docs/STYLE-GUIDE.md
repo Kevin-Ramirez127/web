@@ -61,17 +61,18 @@ Defined in `src/styles/global.css` (`@theme`).
 - Accent, `inline-flex gap-0.45rem`; brackets use mono font.
 - Hover: `#b3b4ff`. Active: 1px press (`transform: translateY(1px)`).
 
-### Dot-matrix rails (`src/components/SideRails.astro`)
+### Dot-matrix rails (`src/components/GlobalRails.astro`)
 
-Vertical LED-style labels on the right (`hidden md:block`):
+One fixed rail for the whole page (desktop, right edge, behind content) — not per-section:
 
 ```html
-<div class="vertical-rl rotate-180 dot-matrix text-[26px]">Golang .</div>
+<span class="vertical-rl rotate-180 dot-matrix-lg text-[40px] lg:text-[52px]">Golang .</span>
 ```
 
-- `.dot-matrix`: transparent text with radial-gradient dot fill clipped to glyphs.
-- `.dot-matrix-solid`: flat `#454441` mono (scroll hint).
-- Backdrop: `.plus-grid` (SVG `+` pattern) + faint radial dots.
+- `.dot-matrix-lg`: transparent text with larger radial-gradient dot fill (7px grid) for big glyphs. Base `.dot-matrix` (5px) remains for small text.
+- 3 columns × 5 section cells (`top/about/experience/skills/contact`, `h-[70vh]` slots). An IntersectionObserver on `main section[id]` (middle viewport band) slides each strip to the active cell with a 0.06s per-column cascade (`src/lib/motion-config.ts` easing). Resize snaps instantly; reduced motion snaps.
+- Rail order must match section order in `src/pages/index.astro`. Backdrop: `.plus-grid` + faint radial dots; mobile gets a fixed faint plus-grid only.
+- Former per-section `SideRails.astro` was replaced by this fixed rail; do not reintroduce per-section rails.
 
 ### Tags / meta chips
 

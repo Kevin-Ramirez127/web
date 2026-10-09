@@ -68,6 +68,24 @@ body {
   letter-spacing: 0.22em;
 }
 
+/* Large variant for the fixed GlobalRails (bigger glyphs need bigger dots). */
+.dot-matrix-lg {
+  font-family: var(--font-matrix);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  color: transparent;
+  -webkit-text-stroke: 0;
+  background-image: radial-gradient(circle, #4a4946 1.8px, transparent 2.2px);
+  background-size: 7px 7px;
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 0.9;
+}
+
+.rail-strip {
+  will-change: transform;
+}
+
 .vertical-rl {
   writing-mode: vertical-rl;
   text-orientation: mixed;
