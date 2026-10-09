@@ -52,14 +52,14 @@ body {
   font-family: var(--font-matrix);
   font-weight: 400;
   letter-spacing: 0.18em;
-  /* dotted LED feel */
+  /* dotted LED feel — keep the grid fine so small glyphs stay legible */
   color: transparent;
-  -webkit-text-stroke: 0;
-  background-image: radial-gradient(circle, #4a4946 1.3px, transparent 1.6px);
-  background-size: 5px 5px;
+  -webkit-text-fill-color: transparent;
+  background-image: radial-gradient(circle, #5f5e58 1.2px, transparent 1.6px);
+  background-size: 4px 4px;
   -webkit-background-clip: text;
   background-clip: text;
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
 .dot-matrix-solid {
@@ -74,12 +74,14 @@ body {
   font-weight: 400;
   letter-spacing: 0.16em;
   color: transparent;
-  -webkit-text-stroke: 0;
-  background-image: radial-gradient(circle, #4a4946 1.8px, transparent 2.2px);
-  background-size: 7px 7px;
+  -webkit-text-fill-color: transparent;
+  /* Fine dense grid: ~2 dots across a glyph stroke so letterforms stay
+     whole instead of breaking into half-circle fragments. */
+  background-image: radial-gradient(circle, #5f5e58 1.5px, transparent 1.9px);
+  background-size: 5px 5px;
   -webkit-background-clip: text;
   background-clip: text;
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
 .rail-strip {
