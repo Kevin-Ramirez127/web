@@ -12,13 +12,14 @@ const RAILS = [
   { id: 'skills', words: ['stack {}', 'tooling ~', 'astro *'] },
   { id: 'contact', words: ['hello ()', 'email @', 'tea'] },
 ];
-// Per-column level for the word. Cells are CSS grids (NOT absolute
-// positioning: inset-y-* maps to the wrong physical axis under vertical-rl,
-// and absolute-only cells collapse to zero width).
+// Per-column level for the word + extra nudge (col0 sits a little lower).
+// Cells are CSS grids (NOT absolute positioning: inset-y-* maps to the wrong
+// physical axis under vertical-rl, and absolute-only cells collapse to zero
+// width).
 const LAYOUT = [
-  'self-start', // word top
-  'self-center', // word middle
-  'self-end', // word bottom
+  { align: 'self-start', offset: 'mt-10' }, // word top, nudged down
+  { align: 'self-center', offset: '' }, // word middle
+  { align: 'self-end', offset: '' }, // word bottom
 ];
 const WORD_CLASS = 'vertical-rl rotate-180 dot-matrix-lg text-[40px] lg:text-[52px] leading-none whitespace-nowrap select-none';
 // Full-height dotted column rendered BEHIND the word; the word's solid
@@ -34,7 +35,7 @@ const DOTS_CLASS = 'vertical-rl dot-matrix-lg dot-matrix-dim text-[40px] lg:text
           {RAILS.map((s) => (
             <div class="rail-cell grid h-[70vh] shrink-0">
               <span aria-hidden="true" class={`${DOTS_CLASS} justify-self-center self-start`}>{DOTS}</span>
-              <span class={`${WORD_CLASS} justify-self-center ${LAYOUT[col]} relative bg-ink px-3 py-6`}>{s.words[col]}</span>
+              <span class={`${WORD_CLASS} justify-self-center ${LAYOUT[col].align} ${LAYOUT[col].offset} relative bg-ink px-3 py-6`}>{s.words[col]}</span>
             </div>
           ))}
         </div>
