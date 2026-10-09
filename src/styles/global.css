@@ -40,6 +40,16 @@ h1, h2, h3 {
   color: #141412;
 }
 
+/* Honeypot anti-spam field: off-screen for humans, tempting for bots. */
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .dot-matrix {
   font-family: var(--font-matrix);
   font-weight: 400;

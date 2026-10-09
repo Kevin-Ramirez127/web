@@ -19,36 +19,98 @@
       </div>
     </div>
 
-    <form class="reveal border hairline bg-ink-soft/40 p-6 md:p-8 space-y-5" action="mailto:hello@ramirezkevin.dev" method="post" enctype="text/plain" onsubmit="return true;">
+    <form id="contact-form" class="reveal border hairline bg-ink-soft/40 p-6 md:p-8 space-y-5" novalidate>
       <h3 class="text-2xl font-light">Send me a message</h3>
       <div class="grid sm:grid-cols-2 gap-5">
         <label class="block">
           <span class="font-matrix text-xs tracking-widest text-bone-faint">NAME</span>
-          <input required name="name" placeholder="Your name" class="mt-2 w-full bg-transparent border hairline px-3 py-2.5 font-light text-bone placeholder:text-bone-faint/70 focus:outline-none focus:border-accent transition" />
+          <input required type="text" name="name" placeholder="Your name" maxlength="100" autocomplete="name" class="mt-2 w-full bg-transparent border hairline px-3 py-2.5 font-light text-bone placeholder:text-bone-faint/70 focus:outline-none focus:border-accent transition" />
         </label>
         <label class="block">
           <span class="font-matrix text-xs tracking-widest text-bone-faint">EMAIL</span>
-          <input required type="email" name="email" placeholder="you@email.com" class="mt-2 w-full bg-transparent border hairline px-3 py-2.5 font-light text-bone placeholder:text-bone-faint/70 focus:outline-none focus:border-accent transition" />
+          <input required type="email" name="email" placeholder="you@email.com" autocomplete="email" class="mt-2 w-full bg-transparent border hairline px-3 py-2.5 font-light text-bone placeholder:text-bone-faint/70 focus:outline-none focus:border-accent transition" />
         </label>
       </div>
       <div class="grid sm:grid-cols-2 gap-5">
         <label class="block">
-          <span class="font-matrix text-xs tracking-widest text-bone-faint">WEBSITE</span>
-          <input name="website" placeholder="https://" class="mt-2 w-full bg-transparent border hairline px-3 py-2.5 font-light text-bone placeholder:text-bone-faint/70 focus:outline-none focus:border-accent transition" />
-        </label>
-        <label class="block">
           <span class="font-matrix text-xs tracking-widest text-bone-faint">SUBJECT</span>
-          <input name="subject" placeholder="Project inquiry" class="mt-2 w-full bg-transparent border hairline px-3 py-2.5 font-light text-bone placeholder:text-bone-faint/70 focus:outline-none focus:border-accent transition" />
+          <input required type="text" name="subject" placeholder="Project inquiry" class="mt-2 w-full bg-transparent border hairline px-3 py-2.5 font-light text-bone placeholder:text-bone-faint/70 focus:outline-none focus:border-accent transition" />
+        </label>
+      </div>
+      {/* Honeypot: humans never see/fill this — bots do. */}
+      <div class="honeypot" aria-hidden="true">
+        <label>Website
+          <input type="text" name="website" placeholder="Website" tabindex="-1" autocomplete="off" />
         </label>
       </div>
       <label class="block">
         <span class="font-matrix text-xs tracking-widest text-bone-faint">MESSAGE</span>
-        <textarea required name="message" rows="5" placeholder="Tell me about your idea..." class="mt-2 w-full bg-transparent border hairline px-3 py-2.5 font-light text-bone placeholder:text-bone-faint/70 focus:outline-none focus:border-accent transition resize-y"></textarea>
+        <textarea required name="message" rows="5" placeholder="Tell me about your idea..." maxlength="2000" minlength="10" class="mt-2 w-full bg-transparent border hairline px-3 py-2.5 font-light text-bone placeholder:text-bone-faint/70 focus:outline-none focus:border-accent transition resize-y"></textarea>
       </label>
       <button type="submit" class="bracket-link text-2xl cursor-pointer">
         <span class="br">[</span><span>Send Message</span><span class="br">]</span><span class="fill-wipe" aria-hidden="true"><span class="br">[</span><span>Send Message</span><span class="br">]</span></span>
       </button>
     </form>
+
+    <script>
+      // Mirrors dev_portfolio Contact.tsx behavior: honeypot -> validate ->
+      // POST /api/contact JSON -> reset + toast (LinkedIn fallback on error).
+      const form = document.getElementById('contact-form') as HTMLFormElement | null;
+      const toasts = document.getElementById('contact-toasts');
+
+      function pushToast(kind: 'ok' | 'err') {
+        if (!toasts) return;
+        const el = document.createElement('div');
+        el.className = 'border hairline bg-ink-soft px-4 py-3 space-y-2';
+        el.innerHTML = kind === 'ok'
+          ? '<p class="font-light text-bone"><span class="text-accent font-matrix">[ ✓ ]</span> Email received</p>'
+          : '<p class="font-light text-bone"><span class="text-accent font-matrix">[ ! ]</span> Error sending message. Please try contact to me via LinkedIn.</p>' +
+            '<p><a class="bracket-link" target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/kevin-ramirez-silva/?locale=en_US"><span class="br">[</span><span>LinkedIn</span><span class="br">]</span></a></p>';
+        const dismiss = document.createElement('button');
+        dismiss.type = 'button';
+        dismiss.className = 'bracket-link text-sm cursor-pointer';
+        dismiss.innerHTML = '<span class="br">[</span><span>dismiss</span><span class="br">]</span>';
+        dismiss.addEventListener('click', () => el.remove());
+        el.appendChild(dismiss);
+        toasts.appendChild(el);
+      }
+
+      function resetForm() {
+        form?.reset();
+      }
+
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!form) return;
+        const data = new FormData(form);
+        const name = String(data.get('name') ?? '');
+        const email = String(data.get('email') ?? '');
+        const subject = String(data.get('subject') ?? '');
+        const message = String(data.get('message') ?? '');
+        const website = String(data.get('website') ?? '');
+
+        // Honeypot: silently drop bots.
+        if (website) return;
+
+        if (![name, email, subject, message].every((f) => f.trim() !== '')) {
+          alert('Please fill in all required fields.');
+          return;
+        }
+
+        try {
+          const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, subject, message, website }),
+          });
+          if (!response.ok) throw new Error('Something went wrong');
+          pushToast('ok');
+        } catch {
+          pushToast('err');
+        }
+        resetForm();
+      });
+    </script>
   </div>
 </section>
 

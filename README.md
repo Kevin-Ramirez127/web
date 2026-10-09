@@ -4,9 +4,10 @@ Astro + Tailwind CSS 4 portfolio. Content from [ramirezkevin.dev](https://www.ra
 
 ## Stack
 
-- Astro 5 (static)
+- Astro 5 + `@astrojs/node` (static pages, server `POST /api/contact`)
 - Tailwind 4 via `@tailwindcss/vite`
-- TypeScript strict
+- TypeScript strict (`pnpm check`)
+- Resend for contact email delivery
 - pnpm
 
 ## Develop
@@ -14,11 +15,20 @@ Astro + Tailwind CSS 4 portfolio. Content from [ramirezkevin.dev](https://www.ra
 ```sh
 pnpm install
 pnpm dev      # http://localhost:4321
-pnpm build    # -> dist/
-pnpm preview
+pnpm check    # astro typecheck, must be 0 errors
+pnpm build    # -> dist/client + dist/server
+PORT=4321 node ./dist/server/entry.mjs   # serve production build
 ```
 
 Node 22 + pnpm 11 tested. If you see `ERR_PNPM_IGNORED_BUILDS`, run `pnpm approve-builds --all`.
+
+## Contact form
+
+Behavior ported from `dev_portfolio`'s `Contact.tsx`: hidden honeypot field (bots get a fake 200), required-field alert, `POST /api/contact` JSON, reset + toast on success, error toast with LinkedIn fallback. Email sending needs:
+
+```sh
+cp .env.example .env   # then fill RESEND_API_KEY + CONTACT_TO_EMAIL
+```
 
 ## Structure
 
@@ -40,5 +50,4 @@ src/
 ## Customize
 
 - Links: GitHub / LinkedIn URLs in `Hero.astro`, `Nav.astro`, `Contact.astro`.
-- Contact form uses `mailto:` by default — swap `action` for Formspree / Resend / API route.
-- Colors / fonts: `src/styles/global.css` `@theme`.
+- Colors / fonts: `src/styles/global.css` `@theme` (documented in `docs/STYLE-GUIDE.md`).

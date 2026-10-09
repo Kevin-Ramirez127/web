@@ -10,8 +10,10 @@
     "check": "astro check"
   },
   "dependencies": {
+    "@astrojs/node": "^9.5.5",
     "astro": "^5.13.5",
-    "motion": "^14.0.0"
+    "motion": "^14.0.0",
+    "resend": "^6.32.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",

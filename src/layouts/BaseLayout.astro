@@ -25,6 +25,7 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
   </head>
   <body class="min-h-screen bg-ink text-bone antialiased">
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:bg-accent focus:text-ink focus:px-3 focus:py-2 focus:font-matrix focus:text-sm">Skip to content</a>
+    <div id="contact-toasts" class="fixed top-4 left-4 z-[70] space-y-3 max-w-sm" aria-live="polite"></div>
     <slot />
     <script>
       import { animate, inView, stagger } from 'motion';
