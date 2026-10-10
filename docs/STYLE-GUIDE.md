@@ -51,10 +51,10 @@ Defined in `src/styles/global.css` (`@theme` + `html[data-theme="light"]`).
 
 ## 3. Typography
 
-- Display/headings: `"Raleway"`, weights 200–500 (`h1/h2/h3` always Raleway via `global.css`).
-- Body: `"Inter"`, weights 200–500.
-- Mono/labels: `"Open Sans"`, weights 300–500. Brackets, labels, tags, stats meta.
-- Pixel: `"Bitcount Grid Double"`, weights 300–500. Rail words only (`.dot-matrix-lg`, solid dim `#6f6e67` — the typeface is the dot matrix, no clip-texture).
+- Display/headings: `"Raleway"` variable (200–700), self-hosted `public/fonts/`.
+- Body: `"Inter"` variable (200–700), self-hosted.
+- Mono/labels: `"Open Sans"` variable (300–700), self-hosted.
+- Pixel: `"Bitcount Grid Double"` variable (300–700), self-hosted. Rail words only, solid dim.
 - Scale: hero `text-[13vw] sm:text-6xl md:text-7xl lg:text-8xl`; section titles `text-5xl md:text-6xl font-extralight`; body `17–18px / relaxed / font-light`.
 - Mono kickers look like `...HELLO, I AM...`, `...CAREER...`, `...STACK...`, `...CONTACT...`.
 

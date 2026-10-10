@@ -1,5 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Bitcount+Grid+Double:wght@300;400;500&family=Inter:wght@200;300;400;500&family=Open+Sans:wght@300;400;500&family=Raleway:wght@200;300;400;500&display=swap');
 @import "tailwindcss";
+
+/* Self-hosted variable fonts (latin subsets in /public/fonts) — no
+   third-party font request chain; display=swap avoids invisible text. */
+@font-face {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 200 700;
+  font-display: swap;
+  src: url("/fonts/raleway-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 200 700;
+  font-display: swap;
+  src: url("/fonts/inter-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("/fonts/opensans-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Bitcount Grid Double";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("/fonts/bitcount-latin.woff2") format("woff2");
+}
 
 @theme {
   --color-ink: #222222;

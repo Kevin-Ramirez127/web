@@ -65,6 +65,14 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
         });
       };
 
+      // Layers are only needed while animating — release them after so
+      // static content doesn't hold compositor memory.
+      const releaseLayers = (els: Element | Element[]) => {
+        (Array.isArray(els) ? els : [els]).forEach((el) => {
+          (el as HTMLElement).style.willChange = 'auto';
+        });
+      };
+
       if (reduceMotion) {
         showAll();
       } else {
@@ -76,7 +84,7 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
               heroEls,
               { opacity: [0, 1], y: [MOTION.distance.heroRise, 0] },
               { duration: MOTION.duration.base, ease: MOTION.ease.out, delay: stagger(MOTION.stagger.hero, { startDelay: 0.1 }) },
-            );
+            ).finished.then(() => releaseLayers(heroEls), () => {});
           } catch {
             heroEls.forEach((el) => el.classList.add('is-visible'));
           }
@@ -97,7 +105,7 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
                   element,
                   { opacity: [0, 1], y: [MOTION.distance.rise, 0] },
                   { duration: MOTION.duration.base, ease: MOTION.ease.out, delay },
-                );
+                ).finished.then(() => releaseLayers(element), () => {});
               } catch {
                 element.classList.add('is-visible');
               }
