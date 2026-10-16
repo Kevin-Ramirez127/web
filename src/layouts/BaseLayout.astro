@@ -56,7 +56,14 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
       }
       applyTheme(currentTheme());
       themeToggles().forEach((b) => b.addEventListener('click', () => {
+        if (reduceMotion) {
+          applyTheme(currentTheme() === 'light' ? 'dark' : 'light');
+          return;
+        }
+        // 250ms theme fade (matches html.theme-anim in global.css).
+        document.documentElement.classList.add('theme-anim');
         applyTheme(currentTheme() === 'light' ? 'dark' : 'light');
+        window.setTimeout(() => document.documentElement.classList.remove('theme-anim'), 300);
       }));
 
       const showAll = () => {
