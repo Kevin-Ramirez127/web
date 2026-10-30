@@ -1,8 +1,8 @@
 // Theme switch transition: the View Transitions API keeps the old page as a
-// snapshot while a quadtree grid of red squares grows over it. Squares are
+// snapshot while a quadtree grid of squares grows over it. Squares are
 // biggest at the viewport center and shrink toward the edges. While a square
-// grows it is solid red; the moment it completes, the snapshot of the new
-// page replaces the red inside it. Total run: 600ms.
+// grows it is a solid fill; the moment it completes, the snapshot of the new
+// page replaces the fill inside it. Total run: 600ms.
 
 export type Theme = 'light' | 'dark';
 
@@ -12,14 +12,20 @@ export const THEME_INK: Record<Theme, string> = {
   dark: '#222222',
 };
 
-// Solid fill for squares that are still expanding.
-const SQUARE_FILL = '#8e8bff';
+// Solid fill for squares that are still expanding, per switch direction.
+// Matches `--color-accent` of the outgoing theme.
+export const SQUARE_FILL = {
+  lightToDark: '#4C4CD9',
+  darkToLight: '#8E8BFF',
+} as const;
 
 interface ThemeSquaresOptions {
   /** Viewport coordinates the radial ripple starts from (page center). */
   origin: { x: number; y: number };
   /** Total duration in ms, viewport covered included. */
   duration?: number;
+  /** Fill shown inside squares that are still expanding. */
+  fill: string;
   /** Applies the incoming theme; runs while the old snapshot is held. */
   apply: () => void;
 }
@@ -84,6 +90,7 @@ function buildSquares(
 export function animateThemeSquares({
   origin,
   duration = 600,
+  fill,
   apply,
 }: ThemeSquaresOptions): Promise<void> {
   const root = document.documentElement;
@@ -113,7 +120,7 @@ export function animateThemeSquares({
   // same cell is added to the new snapshot so its content replaces the ink.
   root.style.setProperty('--theme-old-clip', `path('M0 0H${width}V${height}H0Z')`);
   root.style.setProperty('--theme-new-clip', "path('M 0 0')");
-  root.style.setProperty('--theme-square-fill', SQUARE_FILL);
+  root.style.setProperty('--theme-square-fill', fill);
   // Keep the snapshots on screen for the full run.
   root.style.setProperty('--theme-vt-duration', `${duration}ms`);
 
@@ -151,10 +158,10 @@ export function animateThemeSquares({
     const tick = (now: number) => {
       const elapsed = now - start;
       // Outer rect (clockwise) minus growing squares (counter-clockwise) =
-      // the old page with expanding red holes.
+      // the old page with expanding accent holes.
       let oldPath = `M0 0H${width}V${height}H0Z`;
       // Squares that finished growing: reveal their content from the new
-      // snapshot instead of the flat red fill.
+      // snapshot instead of the flat accent fill.
       let newPath = '';
 
       for (const square of squares) {

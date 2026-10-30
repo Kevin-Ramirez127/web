@@ -37,7 +37,7 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
     <script>
       import { animate, inView, stagger } from 'motion';
       import { MOTION } from '../lib/motion-config.ts';
-      import { animateThemeSquares, THEME_INK } from '../lib/theme-transition.ts';
+      import { animateThemeSquares, SQUARE_FILL, THEME_INK } from '../lib/theme-transition.ts';
 
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -73,6 +73,7 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
         animateThemeSquares({
           origin: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
           duration: THEME_TRANSITION_MS,
+          fill: SQUARE_FILL[next === 'dark' ? 'lightToDark' : 'darkToLight'],
           apply: () => applyTheme(next),
         }).finally(() => { themeTransitioning = false; });
       }));

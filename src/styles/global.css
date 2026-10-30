@@ -226,8 +226,8 @@ html.theme-instant *::after {
 
 /* Square reveal for theme switches. JS updates --theme-old-clip with the
    viewport minus the squares still growing and --theme-new-clip with the
-   squares that finished, so the red group fill shows while a square expands
-   and its real content replaces it the moment it completes. */
+   squares that finished, so the accent group fill shows while a square
+   expands and its real content replaces it the moment it completes. */
 ::view-transition-group(root) {
   background: var(--theme-square-fill, transparent);
 }
