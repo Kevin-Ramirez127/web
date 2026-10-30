@@ -22,7 +22,7 @@ whole site flips with zero class changes.
 |---|---|---|---|
 | `ink` | `#222222` | `bg-ink` | page background |
 | `ink-soft` | `#2a2a2a` | `bg-ink-soft/95` | card / form surface (always with alpha) |
-| `bone` | `#F1E8D9` | `text-bone` | headings, primary text |
+| `bone` | `#e5e5e5` | `text-bone` | headings, primary text |
 | `bone-dim` | `#D9CFB8` | `text-bone-dim` | tags, secondary text |
 | `bone-faint` | `#A89D87` | `text-bone-faint` | labels, meta, placeholders |
 | `accent` | `#8E8BFF` | `text-accent` | bracket links, highlights |

@@ -34,7 +34,7 @@
 @theme {
   --color-ink: #222222;
   --color-ink-soft: #2a2a2a;
-  --color-bone: #F1E8D9;
+  --color-bone: #e5e5e5;
   --color-bone-dim: #D9CFB8;
   --color-bone-faint: #a8a29e;
   --color-accent: #8E8BFF;
@@ -56,21 +56,21 @@ html {
 }
 
 html[data-theme="light"] {
-  --color-ink: #F1E8D9;
-  --color-ink-soft: #E4D8BE;
+  --color-ink: #e5e5e5;
+  --color-ink-soft: #e6e6e6;
   --color-bone: #222222;
   --color-bone-dim: #4c463b;
   --color-bone-faint: #6b6355;
   --color-accent: #4C4CD9;
   --color-accent-dim: #7172D8;
-  --color-line: #D3C7AB;
-  --color-rail: #7E7867;
-  --color-rail-dim: #ABA48D;
+  --color-line: #B1B1B14A;
+  --color-rail: #B6B6C5;
+  --color-rail-dim: #C9C9D6;
   color-scheme: light;
 }
 
 html[data-theme="light"] ::selection {
-  color: #F1E8D9;
+  color: #e5e5e5;
 }
 
 body {

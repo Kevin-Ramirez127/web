@@ -8,7 +8,7 @@ export type Theme = 'light' | 'dark';
 
 // Mirrors the `--color-ink` tokens in src/styles/global.css.
 export const THEME_INK: Record<Theme, string> = {
-  light: '#F1E8D9',
+  light: '#e5e5e5',
   dark: '#222222',
 };
 
