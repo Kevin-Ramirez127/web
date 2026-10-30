@@ -22,7 +22,7 @@ whole site flips with zero class changes.
 |---|---|---|---|
 | `ink` | `#222222` | `bg-ink` | page background |
 | `ink-soft` | `#2a2a2a` | `bg-ink-soft/95` | card / form surface (always with alpha) |
-| `bone` | `#F1E8D9` | `text-bone` | headings, primary text |
+| `bone` | `#e5e5e5` | `text-bone` | headings, primary text |
 | `bone-dim` | `#D9CFB8` | `text-bone-dim` | tags, secondary text |
 | `bone-faint` | `#A89D87` | `text-bone-faint` | labels, meta, placeholders |
 | `accent` | `#8E8BFF` | `text-accent` | bracket links, highlights |
@@ -46,6 +46,15 @@ Defined in `src/styles/global.css` (`@theme` + `html[data-theme="light"]`).
   `meta theme-color`.
 - Toggles: `ThemeToggle.astro` in the header (left of menu) and the menu
   overlay (left of close). Labels name the ACTION (`[ light ]` in dark mode).
+- Switch transition: `src/lib/theme-transition.ts` uses the View Transitions
+  API to hold the old page while a center-out quadtree of squares grows over
+  it. Squares are largest in the middle and shrink toward the edges; each is
+  solid (`SQUARE_FILL`, one value per direction: `lightToDark` / `darkToLight`,
+  matching the outgoing theme's `--color-accent`) while growing and swaps to
+  the new page's snapshot the moment it completes (600ms total). Reduced
+  motion (or no View Transition support) switches instantly. The
+  `::view-transition-*` clip and background rules live in `global.css`;
+  `THEME_INK` mirrors `--color-ink` for `meta theme-color` — keep both in sync.
 - When adding theme-dependent color, ALWAYS use a var token — never a raw
   hex — or it won't flip. (Past traps: rail dots, scroll hint, selection.)
 

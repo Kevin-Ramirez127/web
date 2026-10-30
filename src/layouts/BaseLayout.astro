@@ -37,6 +37,7 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
     <script>
       import { animate, inView, stagger } from 'motion';
       import { MOTION } from '../lib/motion-config.ts';
+      import { animateThemeSquares, SQUARE_FILL, THEME_INK } from '../lib/theme-transition.ts';
 
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -52,18 +53,29 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
         const next = theme === 'light' ? 'dark' : 'light';
         themeLabels().forEach((el) => { el.textContent = next; });
         themeToggles().forEach((b) => b.setAttribute('aria-label', `Switch to ${next} theme`));
-        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'light' ? '#F1E8D9' : '#222222');
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', THEME_INK[theme]);
       }
       applyTheme(currentTheme());
-      themeToggles().forEach((b) => b.addEventListener('click', () => {
+
+      // 600ms square reveal: the old page is held as a snapshot while a
+      // center-out quadtree of squares reveals the incoming theme underneath.
+      const THEME_TRANSITION_MS = 800;
+      let themeTransitioning = false;
+      themeToggles().forEach((button) => button.addEventListener('click', () => {
+        if (themeTransitioning) return;
+        const next = currentTheme() === 'light' ? 'dark' : 'light';
         if (reduceMotion) {
-          applyTheme(currentTheme() === 'light' ? 'dark' : 'light');
+          applyTheme(next);
           return;
         }
-        // 250ms theme fade (matches html.theme-anim in global.css).
-        document.documentElement.classList.add('theme-anim');
-        applyTheme(currentTheme() === 'light' ? 'dark' : 'light');
-        window.setTimeout(() => document.documentElement.classList.remove('theme-anim'), 300);
+
+        themeTransitioning = true;
+        animateThemeSquares({
+          origin: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
+          duration: THEME_TRANSITION_MS,
+          fill: SQUARE_FILL[next === 'dark' ? 'lightToDark' : 'darkToLight'],
+          apply: () => applyTheme(next),
+        }).finally(() => { themeTransitioning = false; });
       }));
 
       const showAll = () => {
