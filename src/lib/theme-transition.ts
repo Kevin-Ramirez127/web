@@ -2,7 +2,8 @@
 // snapshot while a quadtree grid of squares grows over it. Squares are
 // biggest at the viewport center and shrink toward the edges. While a square
 // grows it is a solid fill; the moment it completes, the snapshot of the new
-// page replaces the fill inside it. Total run: 600ms.
+// page replaces the fill inside it. Reduced-motion users get a short
+// cross-fade instead, and browsers without View Transitions switch instantly.
 
 export type Theme = 'light' | 'dark';
 
@@ -121,6 +122,25 @@ function snapshotViewport(): { width: number; height: number } {
   };
 }
 
+// Reduced-motion fallback: keep a short cross-fade between the old and new
+// snapshots instead of the square reveal.
+function animateThemeFade(apply: () => void): Promise<void> {
+  const root = document.documentElement;
+  root.classList.add('theme-fade', 'theme-instant');
+
+  let transition: ViewTransition;
+  try {
+    transition = document.startViewTransition(() => apply());
+  } catch {
+    root.classList.remove('theme-fade', 'theme-instant');
+    apply();
+    return Promise.resolve();
+  }
+
+  const cleanup = () => root.classList.remove('theme-fade', 'theme-instant');
+  return transition.finished.then(cleanup, cleanup);
+}
+
 export function animateThemeSquares({
   origin,
   duration = 600,
@@ -128,11 +148,16 @@ export function animateThemeSquares({
   apply,
 }: ThemeSquaresOptions): Promise<void> {
   const root = document.documentElement;
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (reduceMotion || typeof document.startViewTransition !== 'function') {
+  // No View Transition support: switch instantly, without any animation.
+  if (typeof document.startViewTransition !== 'function') {
     apply();
     return Promise.resolve();
+  }
+
+  // Reduced motion: no squares, just a simple cross-fade.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return animateThemeFade(apply);
   }
 
   if (window.innerWidth === 0 || window.innerHeight === 0) {
@@ -152,14 +177,15 @@ export function animateThemeSquares({
   root.style.setProperty('--theme-vt-duration', `${duration}ms`);
 
   // Freeze color transitions while the new snapshot is captured, so it shows
-  // the incoming theme at full strength instead of mid-fade.
-  root.classList.add('theme-instant');
+  // the incoming theme at full strength instead of mid-fade. The
+  // `theme-squares` class opts into the square-specific pseudo-element CSS.
+  root.classList.add('theme-instant', 'theme-squares');
 
   let transition: ViewTransition;
   try {
     transition = document.startViewTransition(() => apply());
   } catch {
-    root.classList.remove('theme-instant');
+    root.classList.remove('theme-instant', 'theme-squares');
     root.style.removeProperty('--theme-old-clip');
     root.style.removeProperty('--theme-new-clip');
     root.style.removeProperty('--theme-square-fill');
@@ -172,7 +198,7 @@ export function animateThemeSquares({
 
   const cleanup = () => {
     cancelAnimationFrame(frame);
-    root.classList.remove('theme-instant');
+    root.classList.remove('theme-instant', 'theme-squares');
     root.style.removeProperty('--theme-old-clip');
     root.style.removeProperty('--theme-new-clip');
     root.style.removeProperty('--theme-square-fill');

@@ -57,17 +57,13 @@ const { title, description, path = '/', image, noindex = false } = Astro.props;
       }
       applyTheme(currentTheme());
 
-      // 600ms square reveal: the old page is held as a snapshot while a
-      // center-out quadtree of squares reveals the incoming theme underneath.
+      // Theme switch: squares normally, a short cross-fade under reduced
+      // motion, and an instant switch when View Transitions are unsupported.
       const THEME_TRANSITION_MS = 800;
       let themeTransitioning = false;
       themeToggles().forEach((button) => button.addEventListener('click', () => {
         if (themeTransitioning) return;
         const next = currentTheme() === 'light' ? 'dark' : 'light';
-        if (reduceMotion) {
-          applyTheme(next);
-          return;
-        }
 
         themeTransitioning = true;
         animateThemeSquares({

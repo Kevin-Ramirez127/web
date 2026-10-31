@@ -224,25 +224,33 @@ html.theme-instant *::after {
   transition: none !important;
 }
 
-/* Square reveal for theme switches. JS updates --theme-old-clip with the
-   viewport minus the squares still growing and --theme-new-clip with the
-   squares that finished, so the accent group fill shows while a square
-   expands and its real content replaces it the moment it completes. */
-::view-transition-group(root) {
+/* Square reveal for theme switches (html.theme-squares). JS updates
+   --theme-old-clip with the viewport minus the squares still growing and
+   --theme-new-clip with the squares that finished, so the accent group fill
+   shows while a square expands and its real content replaces it the moment
+   it completes. */
+html.theme-squares::view-transition-group(root) {
   background: var(--theme-square-fill, transparent);
 }
-::view-transition-old(root) {
+html.theme-squares::view-transition-old(root) {
   animation: none;
   mix-blend-mode: normal;
   clip-path: var(--theme-old-clip, none);
 }
-::view-transition-new(root) {
+html.theme-squares::view-transition-new(root) {
   animation: theme-vt-hold var(--theme-vt-duration, 600ms) linear both;
   mix-blend-mode: normal;
   clip-path: var(--theme-new-clip, none);
 }
 @keyframes theme-vt-hold {
   from, to { opacity: 1; }
+}
+
+/* Reduced-motion theme switches (html.theme-fade): the default cross-fade,
+   shortened to 200ms. The square rules above are scoped out, so there is no
+   clipping or accent fill. */
+html.theme-fade::view-transition-group(root) {
+  animation-duration: 200ms;
 }
 
 /* Motion system (Motion One / Framer Motion successor).

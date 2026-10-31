@@ -51,9 +51,10 @@ Defined in `src/styles/global.css` (`@theme` + `html[data-theme="light"]`).
   it. Squares are largest in the middle and shrink toward the edges; each is
   solid (`SQUARE_FILL`, one value per direction: `lightToDark` / `darkToLight`,
   matching the outgoing theme's `--color-accent`) while growing and swaps to
-  the new page's snapshot the moment it completes (600ms total). Reduced
-  motion (or no View Transition support) switches instantly. The
-  `::view-transition-*` clip and background rules live in `global.css`;
+  the new page's snapshot the moment it completes. Reduced motion gets a short
+  cross-fade instead (no squares), and browsers without View Transition
+  support switch instantly. The `::view-transition-*` rules live in
+  `global.css`, scoped to `html.theme-squares` / `html.theme-fade`;
   `THEME_INK` mirrors `--color-ink` for `meta theme-color` — keep both in sync.
 - When adding theme-dependent color, ALWAYS use a var token — never a raw
   hex — or it won't flip. (Past traps: rail dots, scroll hint, selection.)
