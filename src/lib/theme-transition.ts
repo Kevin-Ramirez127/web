@@ -87,6 +87,40 @@ function buildSquares(
   return squares;
 }
 
+// View Transition pseudos are laid out against the "snapshot containing
+// block": the viewport with retractable browser UI (mobile URL bar, root
+// scrollbar) hidden. That box is taller than window.innerHeight on mobile, so
+// sizing the clips to innerHeight leaves the group's accent background
+// exposed as a bar at the bottom of the screen. Measure the real box instead.
+function snapshotViewport(): { width: number; height: number } {
+  const pseudoNames = [
+    '::view-transition',
+    '::view-transition-group(root)',
+    '::view-transition-old(root)',
+  ];
+  for (const pseudoName of pseudoNames) {
+    const pseudo = getComputedStyle(document.documentElement, pseudoName);
+    const width = parseFloat(pseudo.width);
+    const height = parseFloat(pseudo.height);
+    if (Number.isFinite(width) && width > 0 && Number.isFinite(height) && height > 0) {
+      return { width, height };
+    }
+  }
+
+  // Fallback: 100vw/100vh also describe the snapshot viewport (browser UI
+  // hidden), unlike innerWidth/innerHeight.
+  const probe = document.createElement('div');
+  probe.style.cssText =
+    'position:fixed;top:0;left:0;width:100vw;height:100vh;visibility:hidden;pointer-events:none;';
+  document.body.appendChild(probe);
+  const measured = { width: probe.offsetWidth, height: probe.offsetHeight };
+  probe.remove();
+  return {
+    width: measured.width || window.innerWidth,
+    height: measured.height || window.innerHeight,
+  };
+}
+
 export function animateThemeSquares({
   origin,
   duration = 600,
@@ -101,24 +135,17 @@ export function animateThemeSquares({
     return Promise.resolve();
   }
 
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-  if (width === 0 || height === 0) {
+  if (window.innerWidth === 0 || window.innerHeight === 0) {
     apply();
     return Promise.resolve();
   }
 
-  // Finish the squares slightly before the snapshot window closes so the
-  // final frame lands while the overlay is still up (no end-of-run pop).
-  const motionDuration = duration * 0.94;
-  const squares = buildSquares(width, height, origin, motionDuration);
-  const maxDelay = motionDuration * 0.45;
-  const grow = motionDuration - maxDelay;
-
-  // Old = full viewport at first, new = nothing. Squares punch holes in the
+  // Old = full snapshot at first, new = nothing. Squares punch holes in the
   // old snapshot and expose the incoming ink; once a square finishes, the
   // same cell is added to the new snapshot so its content replaces the ink.
-  root.style.setProperty('--theme-old-clip', `path('M0 0H${width}V${height}H0Z')`);
+  // The exact snapshot size is only readable once the pseudos exist, so start
+  // with the old snapshot fully visible (no accent bar can leak through).
+  root.style.setProperty('--theme-old-clip', 'none');
   root.style.setProperty('--theme-new-clip', "path('M 0 0')");
   root.style.setProperty('--theme-square-fill', fill);
   // Keep the snapshots on screen for the full run.
@@ -153,6 +180,18 @@ export function animateThemeSquares({
   };
 
   const run = () => {
+    // Read the snapshot containing block size now that the transition pseudos
+    // exist, so clips cover the full box (including mobile browser chrome).
+    const { width, height } = snapshotViewport();
+
+    // Finish the squares slightly before the snapshot window closes so the
+    // final frame lands while the overlay is still up (no end-of-run pop).
+    const motionDuration = duration * 0.94;
+    const squares = buildSquares(width, height, origin, motionDuration);
+    const maxDelay = motionDuration * 0.45;
+    const grow = motionDuration - maxDelay;
+
+    root.style.setProperty('--theme-old-clip', `path('M0 0H${width}V${height}H0Z')`);
     const start = performance.now();
 
     const tick = (now: number) => {
