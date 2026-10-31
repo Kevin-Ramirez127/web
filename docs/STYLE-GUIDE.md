@@ -161,7 +161,8 @@ When adding a new animated block, prefer `.reveal`; reserve `[data-hero]` for ab
 - Central config: `src/lib/site.ts` (URL, title, description, keywords, socials).
 - Head tags: `src/components/SEO.astro` — canonical, robots, Open Graph, Twitter card, theme-color, JSON-LD (`Person` + `WebSite`).
 - `astro.config.mjs`: `site: https://www.ramirezkevin.dev` + `@astrojs/sitemap`.
-- `public/robots.txt` points to `/sitemap-index.xml`; `public/site.webmanifest` + `public/favicon.svg` for icons.
+- `public/robots.txt` points to `/sitemap-index.xml`; `public/favicon.svg` for icons.
+- No web manifest on purpose: the site must not be installable as a PWA, so browsers never show the install prompt.
 - Pages pass `path` for canonical: `<BaseLayout path="/">`.
 - OG image convention: `/og-cover.png` in `public/` (1200×630). Current default 404s gracefully until you add the file — keep the filename stable.
 
