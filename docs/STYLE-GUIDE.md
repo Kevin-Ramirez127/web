@@ -29,6 +29,26 @@ whole site flips with zero class changes.
 | `accent-dim` | `#7172D8` | — | hover borders, focus fallbacks |
 | `line` | `#3a3a3a` | `bg-line` / `border-line` | hairlines, grid gaps |
 
+### Light mode
+
+Light mode keeps three brand anchors — `#e5e5e5` paper, `#4c4cd9` accent,
+`#bbbbc8` rails — and derives the rest from them. The text/surface ramp is a
+cool indigo-gray (not the old warm brown) so every neutral shares the accent's
+hue.
+
+| Token | Hex | Usage |
+|---|---|---|
+| `ink` | `#e5e5e5` | page background |
+| `ink-soft` | `#eeeef2` | card / form surface |
+| `bone` | `#1e1e2a` | headings, primary text |
+| `bone-dim` | `#454555` | tags, secondary text |
+| `bone-faint` | `#5f5f70` | labels, meta, placeholders |
+| `accent` | `#4c4cd9` | bracket links, highlights |
+| `accent-dim` | `#3b3bb0` | hover borders, focus fallbacks |
+| `line` | `#bbbbc8b3` | hairlines (70% of the rail tone) |
+| `rail` | `#bbbbc8` | dot-matrix rails |
+| `rail-dim` | `#d2d2dc` | backdrop dots |
+
 Rules:
 
 - Body text: `text-bone/85`–`text-bone/90`, `font-light`.
