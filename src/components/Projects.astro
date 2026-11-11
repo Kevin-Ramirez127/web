@@ -96,9 +96,9 @@ const contributions = [
     </div>
 
     <h3 class="reveal mt-14 font-matrix text-xs tracking-[0.2em] text-bone-faint">SELECTED OPEN-SOURCE CONTRIBUTIONS</h3>
-    <div class="reveal mt-5 border-t hairline">
+    <div class="mt-5 space-y-4">
       {contributions.map((c) => (
-        <a href={c.url} target="_blank" rel="noreferrer" class="group flex flex-col gap-2 border-b hairline py-5 md:flex-row md:items-baseline md:justify-between md:gap-8 hover:border-accent/40 transition-colors">
+        <a href={c.url} target="_blank" rel="noreferrer" class="reveal group flex flex-col gap-2 border hairline bg-ink-soft/95 p-5 md:flex-row md:items-baseline md:justify-between md:gap-8 md:p-6 hover:border-accent/40 transition-colors">
           <div>
             <h4 class="text-xl font-light text-bone group-hover:text-accent transition-colors">{c.name}</h4>
             <p class="mt-1 max-w-2xl text-bone/80 font-light leading-relaxed">{c.description}</p>
