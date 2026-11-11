@@ -27,14 +27,14 @@ const personJsonLd = {
   '@type': 'Person',
   name: site.name,
   url: site.url,
-  jobTitle: 'Full Stack Developer (Automation & Web Development)',
+  jobTitle: 'Full-Stack Developer (Web, Automation & Developer Tooling)',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Montevideo',
     addressCountry: 'UY',
   },
   sameAs: [site.social.github, site.social.linkedin],
-  knowsAbout: ['React', 'TypeScript', 'Astro', 'Tailwind CSS', 'Automation', 'Process Optimization', 'AI Integrations'],
+  knowsAbout: ['React', 'Astro', 'TypeScript', 'Node.js', 'Go', 'Rust', 'Automation', 'Developer Tooling', 'REST APIs', 'PostgreSQL', 'MongoDB', 'AWS', 'Open Source'],
 };
 
 const websiteJsonLd = {
@@ -65,7 +65,7 @@ const websiteJsonLd = {
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={ogImage} />
-<meta property="og:image:alt" content={`${site.name} - Automation & web development`} />
+<meta property="og:image:alt" content={`${site.name} - Full-stack developer, automation & developer tools`} />
 <meta property="og:locale" content={site.locale} />
 
 {/* Twitter */}
