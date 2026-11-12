@@ -2,7 +2,7 @@ export const site = {
   name: 'Kevin Ramirez',
   title: 'Kevin Ramirez — Full-Stack Developer & Automation Engineer',
   description:
-    'Full-stack developer in Montevideo building fast React and Astro interfaces, the automation behind them, and open-source developer tools in Go and Rust. 5+ years across product, data and internal tooling.',
+    'Full-stack developer in Montevideo building fast React and Astro interfaces, automation, and open-source Go and Rust tools. 5+ years.',
   url: 'https://www.ramirezkevin.dev',
   locale: 'en_US',
   language: 'en',

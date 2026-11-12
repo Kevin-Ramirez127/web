@@ -9,6 +9,7 @@ The same profile, skills and project details are collected in [`profile.md`](./p
 - Astro 5 + `@astrojs/vercel` (static pages, server `POST /api/contact`)
 - Tailwind 4 via `@tailwindcss/vite`
 - TypeScript strict (`pnpm check`)
+- SEO metadata via `@easeo/core` + `@easeo/astro` (build-time payload, validation and contract)
 - Resend for contact email delivery
 - pnpm
 
