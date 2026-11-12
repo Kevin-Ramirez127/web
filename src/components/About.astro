@@ -1,4 +1,19 @@
 ---
+const expertise = [
+  { title: 'Full-stack web', desc: 'React, Astro, TypeScript, Node.js' },
+  { title: 'Automation', desc: 'Browser extensions, Apps Script, CI/CD' },
+  { title: 'Developer tooling', desc: 'Go & Rust CLIs, daemons, plugins' },
+  { title: 'Integrations & data', desc: 'REST APIs, Meta CAPI, PostgreSQL, MongoDB' },
+  { title: 'Performance & quality', desc: 'Web Vitals, testing, accessibility' },
+  { title: 'Cloud & delivery', desc: 'AWS, Docker, GitHub Actions, Vercel' },
+];
+
+const stats = [
+  { value: '5+', label: 'Years of experience' },
+  { value: '25+', label: 'Projects delivered' },
+  { value: '13', label: 'Public repositories' },
+  { value: '4', label: 'Languages: TS · Go · Rust · Python' },
+];
 ---
 <section id="about" class="relative overflow-hidden">
   <div class="relative mx-auto max-w-6xl px-6 md:px-10 py-20 md:py-28">
@@ -6,31 +21,34 @@
 
     <div class="mt-8 max-w-3xl space-y-7 text-[17px] md:text-lg leading-relaxed text-bone/90 font-light">
       <p class="reveal">
-        Hi! I'm a web developer specializing in automation. Full-stack developer with over 5 years of experience, specializing in modern frontend and building intuitive web interfaces, while automating processes to streamline workflows and generate data that enhances decision-making.
+        Hi! I'm a full-stack developer who likes the part after the demo: the interfaces, services and small pieces of automation that make a product hold up in daily use. Over the last 5+ years I've shipped React and Astro frontends, Node services, browser automation and internal tools for teams at Arbusta, Meta and Bridge for Billions.
       </p>
       <p class="reveal">
-        What sets me apart is my focus on development process automation and my ability to transform complex ideas into functional and elegant web solutions, combining creativity with efficiency. I build tools that automate repetitive tasks and bring real value to the projects and teams I collaborate with.
+        I move comfortably between the product layer and the plumbing underneath - designing a clean screen in the morning, then wiring the API, the scheduled job or the CLI that keeps it fed. Lately that has meant building open-source developer tools in Go and Rust, and contributing to Rust projects like Postal and Corcho.
       </p>
     </div>
 
     <h3 class="reveal mt-14 text-4xl md:text-[42px] font-extralight tracking-tight">Areas of Expertise</h3>
-    <ul class="reveal mt-6 space-y-1.5 text-lg text-bone/90 font-light">
-      <li class="flex gap-3"><span class="text-bone-faint">•</span> Frontend Development</li>
-      <li class="flex gap-3"><span class="text-bone-faint">•</span> Automation</li>
-      <li class="flex gap-3"><span class="text-bone-faint">•</span> Performance Optimization</li>
-      <li class="flex gap-3"><span class="text-bone-faint">•</span> Process Automation</li>
-      <li class="flex gap-3"><span class="text-bone-faint">•</span> AI Integrations</li>
-    </ul>
+    <div class="reveal mt-6 grid sm:grid-cols-2 gap-px bg-line/40 border hairline">
+      {expertise.map((e) => (
+        <div class="bg-ink-soft/95 p-5 md:p-6">
+          <h4 class="text-lg font-light text-bone">{e.title}</h4>
+          <p class="mt-1 text-sm text-bone-faint font-light leading-relaxed">{e.desc}</p>
+        </div>
+      ))}
+    </div>
 
     <div class="reveal mt-14 grid grid-cols-2 md:grid-cols-4 gap-px bg-line/40 border hairline overflow-hidden">
-      <div class="bg-ink-soft/95 p-6"><div class="text-4xl font-extralight text-bone">5+</div><div class="mt-1 text-sm text-bone-faint font-light">Years of Experience</div></div>
-      <div class="bg-ink-soft/95 p-6"><div class="text-4xl font-extralight text-bone">25+</div><div class="mt-1 text-sm text-bone-faint font-light">Projects with real impact</div></div>
-      <div class="bg-ink-soft/95 p-6"><div class="text-4xl font-extralight text-bone">15+</div><div class="mt-1 text-sm text-bone-faint font-light">Custom tools built</div></div>
-      <div class="bg-ink-soft/95 p-6"><div class="text-4xl font-extralight text-bone">15+</div><div class="mt-1 text-sm text-bone-faint font-light">Technologies in modern stack</div></div>
+      {stats.map((s) => (
+        <div class="bg-ink-soft/95 p-6">
+          <div class="text-4xl font-extralight text-bone">{s.value}</div>
+          <div class="mt-1 text-sm text-bone-faint font-light">{s.label}</div>
+        </div>
+      ))}
     </div>
 
     <p class="reveal mt-8 max-w-2xl text-bone-faint font-light leading-relaxed">
-      Philosophy: constantly learn, apply technology creatively to solve real problems - automate, experiment, and turn ideas into concrete solutions. Based in Montevideo, Uruguay.
+      Philosophy: build for the person who inherits the code, automate the boring parts, and keep learning in public. Based in Montevideo, Uruguay.
     </p>
   </div>
 </section>

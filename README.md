@@ -2,11 +2,14 @@
 
 Astro + Tailwind CSS 4 portfolio. Content from [ramirezkevin.dev](https://www.ramirezkevin.dev/), styling from `reference/Hero.png` + `reference/About.png`: dark warm ink `#1c1b19`, bone text `#ece2cc`, lavender brackets `#8b8cff`, dot-matrix side rails, `[ menu ]` overlay.
 
+The same profile, skills and project details are collected in [`profile.md`](./profile.md).
+
 ## Stack
 
 - Astro 5 + `@astrojs/vercel` (static pages, server `POST /api/contact`)
 - Tailwind 4 via `@tailwindcss/vite`
 - TypeScript strict (`pnpm check`)
+- SEO metadata via `@easeo/core` + `@easeo/astro` (build-time payload, validation and contract)
 - Resend for contact email delivery
 - pnpm
 

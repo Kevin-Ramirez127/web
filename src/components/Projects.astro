@@ -1,25 +1,67 @@
 ---
 const projects = [
   {
-    name: 'rempkg',
-    url: 'https://github.com/Kevin-Ramirez127/rempkg',
-    description: 'One wrapper for many package managers to remember and tag what you install.',
-    meta: 'Go · ★ 2',
-    stack: ['Go', 'CLI'],
+    name: 'opencode-telegram',
+    url: 'https://github.com/Kevin-Ramirez127/opencode-telegram',
+    meta: 'Go · GPL-3.0 · ★ 4',
+    description: 'A Go daemon that watches every OpenCode session and sends finished runs, questions and permission requests to allowlisted Telegram chats. Answer from your phone instead of babysitting a terminal.',
+    stack: ['Go', 'SSE', 'REST', 'Telegram Bot API', 'systemd'],
   },
   {
-    name: 'quick-bitwarden',
-    url: 'https://github.com/Kevin-Ramirez127/quick-bitwarden',
-    description: 'A quick way to copy your Bitwarden passwords that works on rofi/wofi window.',
-    meta: 'Shell · ★ 3',
-    stack: ['Shell', 'Rofi', 'Wofi'],
+    name: 'gitsion',
+    url: 'https://github.com/Kevin-Ramirez127/gitsion',
+    meta: 'Go · Astro · MongoDB',
+    description: 'A self-hosted feed for the GitHub repositories you care about: pushes, pull requests and issues in one newest-first stream. Go standard-library backend, MongoDB snapshots and an Astro SSR dashboard.',
+    stack: ['Go', 'Astro', 'MongoDB', 'SSR', 'GitHub API'],
   },
   {
     name: 'r-modals',
     url: 'https://github.com/Kevin-Ramirez127/r-modals',
-    description: 'Simple and fast modals made with Rust.',
-    meta: 'Rust',
-    stack: ['Rust'],
+    meta: 'Rust · GPL-3.0 · ★ 2',
+    description: 'Instant, borderless modals for Rust on X11 and Wayland. One call opens a searchable picker with submenus, shortcuts, prefixes, themes and multi-select - and it is the picker behind quick-bitwarden.',
+    stack: ['Rust', 'eframe', 'egui', 'X11', 'Wayland'],
+  },
+  {
+    name: 'quick-bitwarden',
+    url: 'https://github.com/Kevin-Ramirez127/quick-bitwarden',
+    meta: 'Rust · GPL-3.0 · ★ 3',
+    description: 'A background daemon and native picker for the Bitwarden CLI. Caches the vault in memory, copies a password in one keystroke and scrubs it from clipboard history on the way out.',
+    stack: ['Rust', 'Bitwarden CLI', 'r-modals', 'cliphist'],
+  },
+  {
+    name: 'rempkg',
+    url: 'https://github.com/Kevin-Ramirez127/rempkg',
+    meta: 'Go · GPL-3.0 · ★ 2',
+    description: 'One wrapper for pacman, yay, paru, apt and dnf that records exactly what you installed - with tags - in a JSONC file, so dependencies never pollute your list.',
+    stack: ['Go', 'CLI', 'JSONC'],
+  },
+  {
+    name: 'opencode-tools',
+    url: 'https://github.com/Kevin-Ramirez127/opencode-tools',
+    meta: 'TypeScript · MIT',
+    description: 'Plugins that make OpenCode fit the way I work: control the Telegram daemon from the TUI and jump between user messages in long sessions.',
+    stack: ['TypeScript', 'OpenCode plugins'],
+  },
+];
+
+const contributions = [
+  {
+    name: 'Postal',
+    url: 'https://github.com/emiliano-go/postal',
+    meta: 'Rust · ★ 16',
+    description: 'Native WhatsApp client speaking the multi-device protocol. Contributed UI, accessibility and chat-sidebar fixes.',
+  },
+  {
+    name: 'Corcho',
+    url: 'https://github.com/emiliano-go/corcho',
+    meta: 'Rust · Qt6',
+    description: 'Native canvas for personal development. Worked on website behavior, resize handling, checklists and picture-in-picture windows.',
+  },
+  {
+    name: 'LibreCourseUY / libreblog',
+    url: 'https://github.com/LibreCourseUY/libreblog',
+    meta: 'Hugo · GitHub Actions',
+    description: 'Community blog auto-deployed with Actions. Contributed documentation for the React components course.',
   },
 ];
 ---
@@ -27,7 +69,7 @@ const projects = [
   <div class="relative mx-auto max-w-6xl px-6 md:px-10 py-20 md:py-28">
     <p class="reveal font-matrix text-xs tracking-[0.25em] text-bone-faint">...WORK...</p>
     <h2 class="reveal mt-3 text-5xl md:text-6xl font-extralight tracking-tight">Projects</h2>
-    <p class="reveal mt-4 max-w-xl text-bone-faint font-light">Open source - built, used, and maintained by me.</p>
+    <p class="reveal mt-4 max-w-xl text-bone-faint font-light">Open-source tools I built to remove a manual step - and use myself.</p>
 
     <div class="mt-12 space-y-6">
       {projects.map((p) => (
@@ -50,6 +92,19 @@ const projects = [
             </a>
           </div>
         </article>
+      ))}
+    </div>
+
+    <h3 class="reveal mt-14 font-matrix text-xs tracking-[0.2em] text-bone-faint">SELECTED OPEN-SOURCE CONTRIBUTIONS</h3>
+    <div class="mt-5 space-y-4">
+      {contributions.map((c) => (
+        <a href={c.url} target="_blank" rel="noreferrer" class="reveal group flex flex-col gap-2 border hairline bg-ink-soft/95 p-5 md:flex-row md:items-baseline md:justify-between md:gap-8 md:p-6 hover:border-accent/40 transition-colors">
+          <div>
+            <h4 class="text-xl font-light text-bone group-hover:text-accent transition-colors">{c.name}</h4>
+            <p class="mt-1 max-w-2xl text-bone/80 font-light leading-relaxed">{c.description}</p>
+          </div>
+          <p class="shrink-0 font-matrix text-[11px] tracking-widest text-bone-faint font-bold">{c.meta}</p>
+        </a>
       ))}
     </div>
   </div>
